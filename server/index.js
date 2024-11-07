@@ -5,7 +5,7 @@ app.use(express.json());
 const PORT = process.env.PORT;
 
 // router imports
-const userRoutes = require('./routes/userRoutes.js');
+const userRoutes = require('./routes/UserRoutes.js');
 
 app.use('/api/user', userRoutes);
 

@@ -6,8 +6,10 @@ const PORT = process.env.PORT;
 
 // router imports
 const userRoutes = require('./routes/UserRoutes.js');
+const familyRoutes = require('./routes/FamilyRoutes.js')
 
 app.use('/api/user', userRoutes);
+app.use('/api/family', familyRoutes)
 
 
 

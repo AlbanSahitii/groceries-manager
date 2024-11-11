@@ -4,7 +4,9 @@ const UserRouter = express.Router()
 
 const UserController = require('../controllers/User/UserController.js')
 
-UserRouter.get('/register', UserController.register)
+UserRouter.post('/register', UserController.register)
+UserRouter.post('/login', UserController.login)
+UserRouter.delete('/delete', UserController.delete)
 
 
 module.exports = UserRouter

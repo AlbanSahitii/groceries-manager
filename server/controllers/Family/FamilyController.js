@@ -1,4 +1,4 @@
-const FamilyServices = require('../../services/FamilyServices.js')
+const FamilyServices = require('../../services/FamilyServices')
 
 class FamilyController {
     static create = async (req,res) => {

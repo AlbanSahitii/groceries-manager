@@ -57,8 +57,6 @@ class UserService {
         } catch (error) {
             return error
         }
-
-
     }
 
     static deleteUser = async (req,res) =>{

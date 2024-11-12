@@ -1,5 +1,6 @@
 const {User} = require('../models')
 const bcrypt = require('bcrypt')
+const jwt = require('../utils/auth/JwtService')
 
 class UserService {
     static registerUser = async (req,res) => {
@@ -44,10 +45,20 @@ class UserService {
         }
 
 
+        try {
+            const payload = {
+                username: username,
+                password:password
+            }
+    
+            const jwtToken = jwt.generateJwt(payload)
+            return jwtToken
+    
+        } catch (error) {
+            return error
+        }
 
-        // return token to know its logged in - TODO
 
-        return "login succesfully"
     }
 
     static deleteUser = async (req,res) =>{

@@ -20,7 +20,7 @@ class JwtService {
         }
     }
 
-    static verifyJwt = (payload) => {
+    static verifyJwt = (token) => {
 
         try {
             const decoded = jwt.verify(token, secretKey);

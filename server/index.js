@@ -16,7 +16,7 @@ app.use('/api/family', familyRoutes)
 const db = require('./models')
 
 // Start the server
-db.sequelize.sync().then((req) => {  
+db.sequelize.sync(/*{ alter: true }*/).then((req) => {  
   app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
   });

@@ -14,7 +14,9 @@ module.exports = (sequelize, DataTypes) => {
   
         }
 
-    })
+    }, {
+        tableName: 'families'
+    });
     
     return Family;
 }

@@ -77,6 +77,11 @@ class UserService {
         
     }
 
+    static updateUser = async (req,res) => {
+        //todo
+        return 'update user'
+    }
+
 }
 
 module.exports = UserService

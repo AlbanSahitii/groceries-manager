@@ -16,6 +16,11 @@ class UserController {
         const result = await UserServices.deleteUser(req,res)
         res.json(result)
     }
+
+    static update = async(req,res) => {
+        const result = await UserServices.updateUser(req,res)
+        res.json(result)
+    }
 }
 
 module.exports = UserController

@@ -7,9 +7,13 @@ const PORT = process.env.PORT;
 // router imports
 const userRoutes = require('./routes/UserRoutes.js');
 const familyRoutes = require('./routes/FamilyRoutes.js')
+const groceriesRoutes = require('./routes/GroceriesRoutes.js')
+const groceriesCategoryRouter = require('./routes/GroceriesCategoryRouter.js')
 
 app.use('/api/user', userRoutes);
 app.use('/api/family', familyRoutes)
+app.use('/api/groceries', groceriesRoutes)
+app.use('/api/groceries_category', groceriesCategoryRouter)
 
 
 

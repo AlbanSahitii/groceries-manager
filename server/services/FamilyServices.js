@@ -32,6 +32,23 @@ class FamilyServices {
         return family
     }
 
+    static updateFamily = async(req,res) => {
+        //todo
+        return 'updatefamily'
+    }
+    
+    static deleteFamily = async(req,res) => {
+                //todo
+
+        return 'deletefam'
+    }
+    
+    static addUserInFamily = async(req,res) => {
+                //todo
+
+        return 'adduserinfam'
+    }
+
 
 }
 

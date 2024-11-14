@@ -9,5 +9,20 @@ class FamilyController {
         const result = await FamilyServices.getFamily(req,res)
         res.json(result)
     }
+    static update = async (req,res) => {
+        const result = await FamilyServices.updateFamily(req,res)
+        res.json(result)
+    }
+
+    static delete = async (req,res) => {
+        const result = await FamilyServices.deleteFamily(req,res)
+        res.json(result)
+    }
+    static addUser = async (req,res) => {
+        const result = await FamilyServices.addUserInFamily(req,res)
+        res.json(result)
+    }
+
+
 }
 module.exports = FamilyController

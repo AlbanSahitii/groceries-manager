@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const User_Favorites = sequelize.define("User_Favorites", {
+    const UserFavorites = sequelize.define("UserFavorites", {
         groceries_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -20,5 +20,5 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'user_favorites'
     });
     
-    return User_Favorites;
+    return UserFavorites;
 }

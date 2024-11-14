@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const GroceriesCategory = sequelize.define("Groceries_Category", {
+    const GroceriesCategory = sequelize.define("GroceriesCategory", {
         name: {
             type: DataTypes.STRING,
             allowNull: false,

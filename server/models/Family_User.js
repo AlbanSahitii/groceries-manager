@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Family_User = sequelize.define("Family_User", {
+    const FamilyUser = sequelize.define("FamilyUser", {
         owner: {
             type: DataTypes.BOOLEAN,
             allowNull: false
@@ -27,5 +27,5 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'family_user'
     });
     
-    return Family_User;
+    return FamilyUser;
 }

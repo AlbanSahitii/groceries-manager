@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Purchased_Groceries = sequelize.define("Purchased_Groceries", {
+    const PurchasedGroceries = sequelize.define("PurchasedGroceries", {
         family_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -20,5 +20,5 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'purchased_groceries'
     });
     
-    return Purchased_Groceries;
+    return PurchasedGroceries;
 }

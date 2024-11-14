@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Family_Groceries = sequelize.define("Family_Groceries", {
+    const FamilyGroceries = sequelize.define("FamilyGroceries", {
         family_id: {
             type: DataTypes.INTEGER,
             references: {
@@ -26,5 +26,5 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'family_groceries'
     })
     
-    return Family_Groceries;
+    return FamilyGroceries;
 }

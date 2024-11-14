@@ -11,7 +11,7 @@ class UserService {
         if(password !== confirmPassword) {
             return"Password dont match"
         }
-
+        // for testing purpose its removed
         // if (!passwordRegex.match(password)) {
         //     return 'Password does not meet the criteria.'
         // }

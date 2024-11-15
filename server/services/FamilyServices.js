@@ -1,5 +1,6 @@
 const { Family } = require('../models')
-const {User} = require('../models')
+const { User } = require('../models')
+const {FamilyUser} = require('../models')
 class FamilyServices {
 
     static createFamily = async (req,res) => {
@@ -26,9 +27,9 @@ class FamilyServices {
     }
 
     static getFamily = async(req,res) => {
-        const {family_name, user_id} = req.body
+        const {family_id} = req.query
 
-        const family = await Family.findOne({where: {owner_id: user_id, family_name: family_name}})
+        const family = await Family.findOne({where: {id:family_id}})
         return family
     }
 
@@ -79,9 +80,29 @@ class FamilyServices {
     }
     
     static addUserInFamily = async(req,res) => {
-                //todo
 
-        return 'adduserinfam'
+        const {family_id, user_id} = req.body
+        
+        if(!family_id || !user_id) return 'information missing'
+
+        const userInFamily = await FamilyUser.findOne({where: {user_id:user_id}})
+
+        if (userInFamily) return 'user already belongs in a family'
+
+        const insertUser = await FamilyUser.create({family_id:family_id, user_id:user_id})
+
+
+        return insertUser
+    }
+
+    static getFamilyMembers = async (req,res) => {
+        const {family_id} = req.query
+
+        if(!family_id) return 'Information missing'
+
+        const familyMembers = await FamilyUser.findAll({where: {family_id:family_id}})
+        
+        return familyMembers
     }
 
 

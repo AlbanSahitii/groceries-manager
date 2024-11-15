@@ -73,8 +73,7 @@ class UserService {
     }
 
     static getUser = async (req,res) => {
-        const {email} = req.body
-        
+// todo        
     }
 
     static updateUser = async (req,res) => {

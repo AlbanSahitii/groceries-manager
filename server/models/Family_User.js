@@ -1,9 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
     const FamilyUser = sequelize.define("FamilyUser", {
-        owner: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false
-        },
         user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,

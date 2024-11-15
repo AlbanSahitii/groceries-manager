@@ -28,19 +28,54 @@ class FamilyServices {
     static getFamily = async(req,res) => {
         const {family_name, user_id} = req.body
 
-        const family = Family.findOne({where: {owner_id: user_id, family_name: family_name}})
+        const family = await Family.findOne({where: {owner_id: user_id, family_name: family_name}})
         return family
     }
 
     static updateFamily = async(req,res) => {
-        //todo
-        return 'updatefamily'
+        const {family_id,family_name} = req.body
+
+        const family = await Family.findOne({where: {id:family_id}})
+
+        if (!family) {
+            return "family not found"
+                
+        }
+
+        if(family.id === family_id && family.family_name === family_name){
+            return 'Cannot update same information'
+        }
+
+        try {
+            const result = await Family.update(
+                {family_name:family_name},
+                {where: {id:family_id}})
+                
+
+            return 'Information updated'
+
+        } catch (error) {
+            return error
+        }
+    
+        
     }
     
     static deleteFamily = async(req,res) => {
-                //todo
+        const {family_id} = req.body
 
-        return 'deletefam'
+        try {
+            const family = await Family.destroy({where: {id: family_id}})
+
+            if (!family) {
+                return "family not found"
+            }
+    
+            return `family - ${family_id} deleted succesfully`
+    
+        } catch (error) {
+            return error
+        }
     }
     
     static addUserInFamily = async(req,res) => {

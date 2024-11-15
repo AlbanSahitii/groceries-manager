@@ -30,6 +30,6 @@ const FamilyGroceriesRouter = require('./routes/FamilyGroceriesRouter.js');
 // Start the server
 db.sequelize.sync(/*{ alter: true }*/).then((req) => {  
   app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+      console.log(`Server is running on http://localhost:${PORT}`);
   });
 })

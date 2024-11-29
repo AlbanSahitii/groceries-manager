@@ -9,7 +9,7 @@ class UserController {
 
     static login = async(req,res) => {
         const result = await UserServices.loginUser(req,res)
-        res.json(result)
+        res.send(result)
     }
 
     static delete = async(req,res) => {

@@ -35,13 +35,16 @@ class UserService {
         const user = await User.findOne({where: {username: username }})
 
         if(!user){
-            return "Username or password is incorrect"
+            res.status(401).json({ message: 'User doesnt exist' });
+            return
+
         }
 
         const passwordCheck = await bcrypt.compare(password, user.password)
         
         if(!passwordCheck){
-            return "Email or Password is incorrect"
+            res.status(401).json({ message: 'Invalid credentials' });
+            return
         }
 
 
@@ -52,7 +55,8 @@ class UserService {
             }
     
             const jwtToken = jwt.generateJwt(payload)
-            return jwtToken
+            res.status(200).json({jwt:jwtToken})
+            return
     
         } catch (error) {
             return error

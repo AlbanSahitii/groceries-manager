@@ -6,6 +6,8 @@ import { AuthContext } from '../../context/AuthContext'
 const Login = () =>{
     const [inputs, setInputs] = useState({})
     const {user, setUser, login} = useContext(AuthContext)
+    const username =  localStorage.getItem('username')
+    const jwt =  localStorage.getItem('jwt')
 
 
 
@@ -20,9 +22,9 @@ const Login = () =>{
         const name = e.target.name
         setInputs(values => ({...values, [name]: value}))
     }
-
-
-    console.log(localStorage.getItem('userData'))
+    console.log(user)
+    console.log(username)
+    console.log(jwt)
 
     return (
         <>

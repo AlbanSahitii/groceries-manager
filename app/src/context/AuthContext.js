@@ -5,7 +5,7 @@ import axios from 'axios';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
 
@@ -13,12 +13,9 @@ export const AuthProvider = ({ children }) => {
         try {
           await axios.post('http://localhost:3080/api/user/login', data)
           .then(response => {  
-            const userData = {
-              username: data.username,
-              jwt:response.data.jwt
-            }
-              setUser(userData)
-              localStorage.setItem('userData', JSON.stringify(userData));
+              localStorage.setItem('username', data.username)
+              localStorage.setItem('jwt', response.data.jwt)
+              setUser({username: data.username, jwt: response.data.jwt})
               navigate('/profile') 
           })
 

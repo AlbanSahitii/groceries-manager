@@ -1,12 +1,19 @@
-import React, { useContext } from "react";
-import {AuthContext} from "../context/AuthContext";
-import { Outlet } from "react-router-dom";
-import Login from "../components/LoginPage/Login";
+import React, { useContext, useEffect } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { Outlet, Navigate } from "react-router-dom";
 
 const AuthLayout = () => {
-    const {user} = useContext(AuthContext);
-    const userData = localStorage.getItem('userData')
-    return user || userData ? <Outlet/> : <Login/>
-}
+  const { user, setUser } = useContext(AuthContext);
+  const username = localStorage.getItem("username");
+  const jwt = localStorage.getItem("jwt");
 
-export default AuthLayout
+  useEffect(() => {
+    if (!user && username && jwt) {
+      setUser({ username: username, jwt: jwt });
+    }
+  }, [user, username, jwt, setUser]);
+
+  return user || username || jwt ? <Outlet /> : <Navigate to="/login" />;
+};
+
+export default AuthLayout;

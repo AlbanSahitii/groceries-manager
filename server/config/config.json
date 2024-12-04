@@ -1,21 +1,21 @@
 {
   "development": {
     "username": "root",
-    "password": "Wtf123.123!",
+    "password": "2500",
     "database": "groceries-manager",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "Wtf123.123!",
+    "password": "2500",
     "database": "groceries-manager",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": "Wtf123.123!",
+    "password": "2500",
     "database": "groceries-manager",
     "host": "127.0.0.1",
     "dialect": "mysql"

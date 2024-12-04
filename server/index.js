@@ -4,7 +4,7 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(cors());
-const PORT = process.env.PORT
+const PORT = 3080 //process.env.PORT
 
 // router imports
 const userRouter = require('./routes/UserRouter.js');

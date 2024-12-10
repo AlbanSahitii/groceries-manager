@@ -11,7 +11,8 @@ FamilyRouter.get('/get', FamilyController.get)
 FamilyRouter.put('/update', FamilyController.update) 
 FamilyRouter.delete('/delete', FamilyController.delete) 
 FamilyRouter.post('/add_user', FamilyController.addUser)
-FamilyRouter.get('/get_members', FamilyController.getMembers) 
+FamilyRouter.get('/get_members', FamilyController.getMembers)
+FamilyRouter.get('/check_user', FamilyController.checkUser) 
 
 
 module.exports = FamilyRouter

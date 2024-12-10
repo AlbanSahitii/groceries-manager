@@ -28,6 +28,11 @@ class FamilyController {
         res.json(result)
     }
 
+    static checkUser = async (req,res) => {
+        const result = await FamilyServices.isUserInFamily(req,res)
+        res.json(result)
+    }
+
 
 }
 module.exports = FamilyController

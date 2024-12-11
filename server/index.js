@@ -5,6 +5,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 const PORT = process.env.PORT
+const HOST = process.env.HOST
 
 // router imports
 const userRouter = require('./routes/UserRouter.js');
@@ -32,6 +33,6 @@ const FamilyGroceriesRouter = require('./routes/FamilyGroceriesRouter.js');
 // Start the server
 db.sequelize.sync(/*{ alter: true }*/).then((req) => {  
   app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
+      console.log(`Server is running on ${HOST}:${PORT}`);
   });
 })

@@ -18,8 +18,6 @@ const Profile = () => {
         const fetchData = async () => {
 
             const response = await axios.get(`http://localhost:3080/api/family/check_user?user_id=${user.userId}`)
-            console.log(response)
-            console.log(user.userId)
             if (response.data === "User doesn`t have an family") {
                 setUserFam(false)
             } else {
@@ -29,7 +27,6 @@ const Profile = () => {
         fetchData()
     }, [userFam])
 
-        console.log(userFam)
     
 
 
@@ -47,7 +44,12 @@ const Profile = () => {
         {/* 
             TODO
 
-            create model for invite system for family members
+            use the logic for inviting. createFamily, acceptFamily,profilePAge components will be finished without UI design. 
+            create family = 1 form which will be used to create family
+            accept family will have 2 buttons, accept and refuse.
+            profilepage will show family members
+
+            
 
         */}
             {

@@ -86,7 +86,7 @@ class FamilyServices {
     }
     
     static addUserInFamily = async(req,res) => {
-
+        // this api wont be used. invite logic below will
         const {family_id, user_id} = req.body
         
         if(!family_id || !user_id) return 'information missing'

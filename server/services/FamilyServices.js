@@ -1,6 +1,9 @@
 const { Family } = require('../models')
 const { User } = require('../models')
 const {FamilyUser} = require('../models')
+const {FamilyInvites} = require('../models')
+const { sequelize } = require('../models');
+
 class FamilyServices {
 
     static createFamily = async (req,res) => {
@@ -9,15 +12,18 @@ class FamilyServices {
 
         if(!family_name || !user_id) return 'information missing'
 
-        const familyOwner = await Family.findOne({where: {owner_id: user_id}})
         const findUser = await User.findOne({where:{id:user_id}})
-
-        if(familyOwner) return 'You are owner of an family.'
-
         if(!findUser) return 'User doesnt exits'
+        
+        const familyOwner = await Family.findOne({where: {owner_id: user_id}})
+        if(familyOwner) return 'You are owner of an family.'
+        
+        const userInFamily = await FamilyUser.findOne({where: {user_id: user_id}})
+        if(userInFamily) return 'You already belong in a family'
 
         try {
-            await Family.create({family_name: family_name, owner_id: user_id})
+            const family = await Family.create({family_name: family_name, owner_id: user_id})
+            await FamilyUser.create({family_id: family.id, user_id: user_id })
 
         } catch (error) {
             return error.message
@@ -121,6 +127,54 @@ class FamilyServices {
 
     
     
+    }
+
+    static inviteUserInFamily = async (req,res) => {
+        const {user_id, family_id} = req.body
+
+        if(!user_id || !family_id) return 'Information missing'
+
+        const checkInvites = await FamilyInvites.findOne({where: {user_id:user_id}})
+        if(checkInvites) return 'User has an pending family invite'
+
+        const checkFamily = await FamilyUser.findOne({where: {user_id: user_id}})
+        if(checkFamily) return 'User is already in a family'
+
+
+        try {
+            const result = await FamilyInvites.create({user_id: user_id, family_id: family_id})
+            return result
+        } catch (error) {
+            return error
+        }
+
+
+    }
+    
+    static acceptFamilyInvite = async (req,res) => {
+        const {user_id, family_id} = req.body
+
+        if(!user_id || !family_id) return 'Information missing'
+
+        const invite = await FamilyInvites.findOne({where: {user_id:user_id}})
+        if(!invite) return 'Invite doesnt exist'
+
+        try {
+            await sequelize.transaction(async (transaction) => {
+                await Promise.all([
+                  FamilyInvites.destroy({ where: { user_id: user_id }, transaction }),
+                  FamilyUser.create({ user_id: user_id, family_id: family_id }, { transaction })
+                ]);
+              });
+
+            return 'Invite Accepted'
+
+        } catch (error) {
+            return error
+        }
+        
+
+
     }
 
 

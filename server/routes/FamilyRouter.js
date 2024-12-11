@@ -13,6 +13,8 @@ FamilyRouter.delete('/delete', FamilyController.delete)
 FamilyRouter.post('/add_user', FamilyController.addUser)
 FamilyRouter.get('/get_members', FamilyController.getMembers)
 FamilyRouter.get('/check_user', FamilyController.checkUser) 
+FamilyRouter.post('/add_family_member', FamilyController.addFamilyMember)
+FamilyRouter.post('/accept_invite', FamilyController.acceptInvite)
 
 
 module.exports = FamilyRouter

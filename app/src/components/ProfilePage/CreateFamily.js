@@ -4,6 +4,7 @@ import { AuthContext } from '../../context/AuthContext'
 const CreateFamily = () => {
     return (
         <>
+        Create FAM
         </>
     )
 }

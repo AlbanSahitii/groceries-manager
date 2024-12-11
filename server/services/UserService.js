@@ -55,7 +55,7 @@ class UserService {
             }
     
             const jwtToken = jwt.generateJwt(payload)
-            res.status(200).json({jwt:jwtToken})
+            res.status(200).json({jwt:jwtToken, user_id: user.id})
             return
     
         } catch (error) {

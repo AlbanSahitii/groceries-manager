@@ -6,13 +6,15 @@ const GuestLayout = () => {
     const {user, setUser} = useContext(AuthContext);
     const username =  localStorage.getItem('username')
     const jwt =  localStorage.getItem('jwt')
+    const userId =  localStorage.getItem('userId')
 
     if(!user && username && jwt) {
-        setUser({username: username, jwt:jwt})
+        setUser({username: username, jwt:jwt, userId: userId})
     }
     if(user && !username & !jwt) {
         localStorage.setItem('jwt', user.jwt)
         localStorage.setItem('username', user.username)
+        localStorage.setItem('userId', user.userId)
     }
 
 

@@ -6,7 +6,7 @@ const AcceptFamily = () => {
 
     return (
         <>
-        
+            Accept FAm
         </>
     )
 }

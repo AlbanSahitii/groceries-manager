@@ -15,7 +15,8 @@ export const AuthProvider = ({ children }) => {
           .then(response => {  
               localStorage.setItem('username', data.username)
               localStorage.setItem('jwt', response.data.jwt)
-              setUser({username: data.username, jwt: response.data.jwt})
+              localStorage.setItem('userId', response.data.user_id)
+              setUser({username: data.username, jwt: response.data.jwt, userId: response.data.user_id})
               navigate('/profile') 
           })
 

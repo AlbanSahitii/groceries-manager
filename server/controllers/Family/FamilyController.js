@@ -33,6 +33,16 @@ class FamilyController {
         res.json(result)
     }
 
+    static addFamilyMember = async (req,res) => {
+        const result = await FamilyServices.inviteUserInFamily(req,res)
+        res.json(result)
+    }
+
+    static acceptInvite = async (req,res) => {
+        const result = await FamilyServices.acceptFamilyInvite(req,res) 
+        res.json(result)
+    }
+
 
 }
 module.exports = FamilyController

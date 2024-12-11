@@ -1,19 +1,24 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Outlet, Navigate } from "react-router-dom";
 
 const AuthLayout = () => {
   const { user, setUser } = useContext(AuthContext);
-  const username = localStorage.getItem("username");
-  const jwt = localStorage.getItem("jwt");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!user && username && jwt) {
-      setUser({ username: username, jwt: jwt });
-    }
-  }, [user, username, jwt, setUser]);
+    const username = localStorage.getItem("username");
+    const jwt = localStorage.getItem("jwt");
+    const userId = localStorage.getItem("userId");
 
-  return user || username || jwt ? <Outlet /> : <Navigate to="/login" />;
+    if (!user && username && jwt && userId) {
+      setUser({ username, jwt, userId });
+    }
+    setIsLoading(false); // Mark loading as complete
+  }, [user, setUser]);
+
+
+  return user ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default AuthLayout;

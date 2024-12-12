@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import CreateFamily from './CreateFamily'
 import ProfilePage from './ProfilePage'
-import AcceptFamily from './CreateFamily'
+import AcceptFamily from './AcceptFamily'
 
 const Profile = () => {
     const {user, setUser} = useContext(AuthContext)
@@ -18,16 +18,18 @@ const Profile = () => {
         const fetchData = async () => {
 
             const response = await axios.get(`http://localhost:3080/api/family/check_user?user_id=${user.userId}`)
+            console.log(response.data)
             if (response.data === "User doesn`t have an family") {
                 setUserFam(false)
+            } else if (response.data === "User has an active invite") {
+                setUserFam('Invited')
             } else {
                 setUserFam(true)
             }
         }   
         fetchData()
-    }, [userFam])
+    }, [user.userId])
 
-    
 
 
     return (
@@ -39,6 +41,8 @@ const Profile = () => {
                         localStorage.removeItem('jwt')
                         localStorage.removeItem('username')
                     }}>logout</button>
+                    <br></br>
+                    <br></br>
 
         
         {/* 
@@ -49,14 +53,27 @@ const Profile = () => {
             accept family will have 2 buttons, accept and refuse.
             profilepage will show family members
 
-            
+
 
         */}
             {
-                userFam ? (<ProfilePage />)
-                :
-                (<CreateFamily/>)
+                (() => {
+                    if (userFam === true) {
+                    return (
+                        (<ProfilePage />)
+                    )
+                    } else if (userFam === "Invited") {
+                    return (
+                        (<AcceptFamily/>)
+                    )
+                    } else if (userFam === false) {
+                    return (
+                        (<CreateFamily/>)
+                    )
+                    }
+                })()
             }
+
 
 
         </>

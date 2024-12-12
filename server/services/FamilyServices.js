@@ -116,12 +116,15 @@ class FamilyServices {
 
         if(!user_id) return 'Information missing'
         
-        const userFamily = await FamilyUser.findOne({where : {user_id: user_id}});
+        const userFamily = await FamilyUser.findOne({where : {user_id: user_id}})
+        const inviteInFamily = await FamilyInvites.findOne({where: {user_id: user_id}})
+
 
         if(userFamily) {
             return 'User has a family'
+        } else if (inviteInFamily) {
+            return 'User has an active invite'
         } else {
-
             return 'User doesn`t have an family'
         }
 

@@ -15,8 +15,7 @@ const CreateFamily = () => {
         
         try {
             const response = await axios.post(`http://localhost:3080/api/family/create`, 
-                {family_name: inputs.familyName, user_id: user.userId}
-            )
+                {family_name: inputs.familyName, user_id: user.userId})
             alert(response.data)
 
             console.log(response)
@@ -41,7 +40,7 @@ const CreateFamily = () => {
         Create FAm
 
         <form onSubmit={handleSubmit}>
-                <label>Enter your username:
+                <label>Enter your family name:
                 <input 
                     type="text" 
                     name="familyName"

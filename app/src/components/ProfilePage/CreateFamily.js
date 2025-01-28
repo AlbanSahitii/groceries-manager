@@ -17,8 +17,7 @@ const CreateFamily = () => {
             const response = await axios.post(`http://localhost:3080/api/family/create`, 
                 {family_name: inputs.familyName, user_id: user.userId})
             alert(response.data)
-
-            console.log(response)
+            window.location.reload();
             
         } catch (error) {
             console.log(error)            

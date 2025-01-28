@@ -6,11 +6,12 @@ class UserService {
     static registerUser = async (req,res) => {
         const {username, password,confirmPassword, email, fullName} = req.body
         const passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$"
-
+        // empty body to do
         
         if(password !== confirmPassword) {
             return"Password dont match"
         }
+        
         // for testing purpose its removed
         // if (!passwordRegex.match(password)) {
         //     return 'Password does not meet the criteria.'

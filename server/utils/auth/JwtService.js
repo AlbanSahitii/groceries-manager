@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const secretKey = 'Alban'//process.env.JWT_KEY
+const secretKey = process.env.JWT_KEY
 
 class JwtService {
 

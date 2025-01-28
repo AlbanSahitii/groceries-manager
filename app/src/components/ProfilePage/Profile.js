@@ -18,7 +18,7 @@ const Profile = () => {
         const fetchData = async () => {
 
             const response = await axios.get(`http://localhost:3080/api/family/check_user?user_id=${user.userId}`)
-            setUser({...user, family_id: response.data?.family_id})
+            setUser({...user, familyId: response.data?.family_id})
             if (response.data.message === "User doesn`t have an family") {
                 setUserFam(false)
             } else if (response.data.message === "User has an active invite") {
@@ -30,6 +30,7 @@ const Profile = () => {
         fetchData()
     }, [user.userId])
 
+    console.log(user);
 
     return (
         <>
@@ -51,6 +52,9 @@ const Profile = () => {
             accept family will have 2 buttons, accept and refuse.
             profilepage will show family members
 
+            accept button done. create family form done.
+
+            do deny invite from family
 
 
         */}

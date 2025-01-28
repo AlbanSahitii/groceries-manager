@@ -43,6 +43,11 @@ class FamilyController {
         res.json(result)
     }
 
+    static declineInvite = async (req,res) => {
+        const result = await FamilyServices.declineFamilyInvite(req,res)
+        res.json(result)
+    }
+
 
 }
 module.exports = FamilyController

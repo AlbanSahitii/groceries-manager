@@ -138,9 +138,7 @@ class FamilyServices {
             
             
         }
-
-    
-    
+ 
     }
 
     static inviteUserInFamily = async (req,res) => {
@@ -189,6 +187,20 @@ class FamilyServices {
         
 
 
+    }
+
+    static declineFamilyInvite = async (req,res) => {
+        const {user_id, family_id} = req.body
+
+        if(!user_id || !family_id) return 'Missing information'
+
+        const invite = await FamilyInvites.findOne({where: {user_id: user_id, family_id: family_id}})
+
+        if(!invite) return 'Invite not found'
+
+        const deleteInvite = await FamilyInvites.destroy({where:{id: invite.id}})
+
+        return 'Invite Deleted Sucessfully'
     }
 
 

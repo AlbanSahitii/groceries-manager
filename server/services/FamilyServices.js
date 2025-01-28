@@ -165,19 +165,21 @@ class FamilyServices {
     }
 
     static inviteUserInFamily = async (req,res) => {
-        const {user_id, family_id} = req.body
+        const {email, family_id} = req.body
+        if(!email || !family_id) return 'Information missing'
 
-        if(!user_id || !family_id) return 'Information missing'
+        const userData = await User.findOne({attributes:['id'], where:{email:email}})
+        const userId = userData.id
 
-        const checkInvites = await FamilyInvites.findOne({where: {user_id:user_id}})
+        const checkInvites = await FamilyInvites.findOne({where: {user_id:userId}})
         if(checkInvites) return 'User has an pending family invite'
 
-        const checkFamily = await FamilyUser.findOne({where: {user_id: user_id}})
+        const checkFamily = await FamilyUser.findOne({where: {user_id: userId}})
         if(checkFamily) return 'User is already in a family'
 
 
         try {
-            const result = await FamilyInvites.create({user_id: user_id, family_id: family_id})
+            const result = await FamilyInvites.create({user_id: userId, family_id: family_id})
             return result
         } catch (error) {
             return error
@@ -225,8 +227,6 @@ class FamilyServices {
 
         return 'Invite Deleted Sucessfully'
     }
-
-
 }
 
 module.exports = FamilyServices

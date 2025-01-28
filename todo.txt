@@ -1,0 +1,3 @@
+use api for getting all members and display in profile page
+show the owner an page for inviting members via email
+show the owner of family an page that he can delete invites to users

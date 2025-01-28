@@ -1,3 +1,5 @@
 show the owner an page for inviting members via email
-add delete function for deletting family by owner
-show the owner of family an page that he can delete invites to users
+make owner role for users or regular fam member and add delete function for deletting family by owner, show the owner of family an page that he can delete invites to users. this will be in different page
+
+
+later design

@@ -45,19 +45,7 @@ const Profile = () => {
                     <br></br>
 
         
-        {/* 
-            TODO
 
-            use the logic for inviting. createFamily, acceptFamily,profilePAge components will be finished without UI design. 
-            accept family will have 2 buttons, accept and refuse.
-            profilepage will show family members
-
-            accept button done. create family form done.
-
-            do deny invite from family
-
-
-        */}
             {
                 (() => {
                     if (userFam === true) {

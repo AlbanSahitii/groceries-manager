@@ -103,16 +103,30 @@ class FamilyServices {
 
     static getFamilyMembers = async (req,res) => {
         const {family_id} = req.query
-
         if(!family_id) return 'Information missing'
 
-        const familyMembers = await FamilyUser.findAll({attributes:['user_id']},{where: {family_id:family_id}})
-        const ids = familyMembers.map(row => row.user_id);
+        const familyMembers = await FamilyUser.findAll({
+            attributes:['user_id'],
+            where: {
+                family_id:family_id
+            },
+        })
 
-        const promises = ids.map((id) => User.findOne({attributes: ["id", "email", "username", "full_name"]},{where: {id: id}}))
+        if(familyMembers.length < 1 || familyMembers === undefined) return 'Family doesnt exist'
+
+        const ids = familyMembers.map(row => row.user_id);
         
+        const users = await User.findAll({
+            attributes: ["email", "username", "full_name"],
+            where: {
+              id: ids,
+            },
+        });
+                  
+        
+
         try {
-            const result = await Promise.all(promises)
+            const result = await Promise.all(users)
             return result
 
         } catch (error) {

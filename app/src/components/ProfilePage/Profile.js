@@ -35,8 +35,11 @@ const Profile = () => {
 
     return (
         <>
-                <button onClick={() => navigate('/login')}>go back</button>
+                <button onClick={() => console.log(`this will be settings section`)}>settings</button>
+                <button onClick={() => console.log(`this will be grocery list section`)}>groceries</button>
+                <button onClick={() => console.log(`this will be find grocery section`)}>find grocery</button>
 
+                <button onClick={() => navigate('/login')}>go back</button>
                 <button onClick={() => {
                         setUser(null)
                         localStorage.removeItem('jwt')

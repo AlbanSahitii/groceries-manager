@@ -169,6 +169,7 @@ class FamilyServices {
         if(!email || !family_id) return 'Information missing'
 
         const userData = await User.findOne({attributes:['id'], where:{email:email}})
+        if(!userData) return 'user doesnt exist'
         const userId = userData.id
 
         const checkInvites = await FamilyInvites.findOne({where: {user_id:userId}})
@@ -180,7 +181,7 @@ class FamilyServices {
 
         try {
             const result = await FamilyInvites.create({user_id: userId, family_id: family_id})
-            return result
+            return 'Family member has been invited'
         } catch (error) {
             return error
         }

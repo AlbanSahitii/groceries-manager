@@ -39,16 +39,16 @@ const CreateFamily = () => {
         Create FAm
 
         <form onSubmit={handleSubmit}>
-                <label>Enter your family name:
+            <label>Enter your family name:
                 <input 
                     type="text" 
                     name="familyName"
                     value = {inputs.familyName || ""} 
                     onChange={handleChange}
                 />
-                </label>
-                <input type="submit" />
-            </form>
+            </label>
+            <input type="submit" />
+        </form>
 
         </>
     )

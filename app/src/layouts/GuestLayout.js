@@ -7,14 +7,18 @@ const GuestLayout = () => {
     const username =  localStorage.getItem('username')
     const jwt =  localStorage.getItem('jwt')
     const userId =  localStorage.getItem('userId')
+    const userType = localStorage.getItem('userType')
+    const familyId = localStorage.getItem('familyId')
 
-    if(!user && username && jwt) {
-        setUser({username: username, jwt:jwt, userId: userId})
+
+    if(!user && username && jwt && userId && userType) {
+        setUser({username: username, jwt:jwt, userId: userId, userType: userType, familyId:familyId})
     }
     if(user && !username & !jwt) {
         localStorage.setItem('jwt', user.jwt)
         localStorage.setItem('username', user.username)
         localStorage.setItem('userId', user.userId)
+        localStorage.setItem('userType', user.userType)
     }
 
 

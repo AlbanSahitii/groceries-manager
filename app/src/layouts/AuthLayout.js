@@ -10,11 +10,13 @@ const AuthLayout = () => {
     const username = localStorage.getItem("username");
     const jwt = localStorage.getItem("jwt");
     const userId = localStorage.getItem("userId");
+    const userType = localStorage.getItem('userType')
+    const familyId = localStorage.getItem('familyId')
 
-    if (!user && username && jwt && userId) {
-      setUser({ username, jwt, userId });
+    if (!user && username && jwt && userId && userType) {
+      setUser({ username, jwt, userId,userType, familyId });
     }
-    setIsLoading(false); // Mark loading as complete
+    setIsLoading(false);
   }, [user, setUser]);
 
 

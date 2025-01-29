@@ -23,6 +23,28 @@ const ProfilePage = () => {
         
             ProfilePage
 
+            {
+                (() => {
+                    if (user.userType === 'Owner') {
+                        return (
+                            (   <>
+                                    <div> im an Owner </div>
+                                    
+                                    <button onClick={() => console.log(`you clicked hey`)}>Managment</button>
+                                </>
+                            )
+                        )
+                    } else if (user.userType === "Member") {
+                        return (
+                            (
+                                <div>im a Member</div>
+                            )
+                        )
+                    }
+                })()
+            }
+
+
             <ul>
                 {
                     familyMembers.map((item, index) => (

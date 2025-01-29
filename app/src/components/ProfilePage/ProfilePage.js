@@ -18,7 +18,6 @@ const ProfilePage = () => {
         fetchData()
     }, [])
 
-    console.log(familyMembers)
     return (
         <>
         

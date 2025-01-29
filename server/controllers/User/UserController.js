@@ -21,6 +21,10 @@ class UserController {
         const result = await UserServices.updateUser(req,res)
         res.json(result)
     }
+    static userType = async(req,res) => {
+        const result = await UserServices.getUserType(req,res)
+        res.json(result)
+    }
 }
 
 module.exports = UserController

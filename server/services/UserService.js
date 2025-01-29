@@ -1,4 +1,5 @@
-const {User} = require('../models')
+const {User, FamilyUser, Family, sequelize} = require('../models')
+
 const bcrypt = require('bcrypt')
 const jwt = require('../utils/auth/JwtService')
 
@@ -84,6 +85,27 @@ class UserService {
     static updateUser = async (req,res) => {
         //todo
         return 'update user'
+    }
+
+    static getUserType = async(req,res) => {
+        const {user_id} = req.query
+
+        const getUser = await User.findOne({where: {id: user_id}})
+        if(!getUser) return 'User doesnt exist'
+
+
+        const owner = await sequelize.query('SELECT * FROM users JOIN families ON users.id = families.owner_id where users.id = ?', {
+            replacements: [user_id],
+            type: sequelize.QueryTypes.SELECT
+        })
+
+
+        if(owner[0]) {
+            return 'Owner'
+        } else { 
+            return 'Member'
+        }
+        
     }
 
 }

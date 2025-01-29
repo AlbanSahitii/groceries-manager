@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         owner_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            unique: true,
             references: {
                 model: 'users',
                 key: 'id'
@@ -17,6 +18,12 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         tableName: 'families'
     });
+
+    // Family.belongsTo(sequelize.models.User, { 
+    //     foreignKey: "owner_id", 
+    // });
+    // there is a problem with belong to. if needed in future fix it
+
     
     return Family;
 }

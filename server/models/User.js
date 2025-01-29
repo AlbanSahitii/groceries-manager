@@ -26,5 +26,10 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         tableName: 'users'
     });
+
+    User.hasOne(sequelize.models.Family, { 
+        foreignKey: "owner_id"
+    });
+
     return User;
 }

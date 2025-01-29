@@ -5,8 +5,8 @@ make owner role for users or regular fam member and add delete function for dele
 later design
 
 next : make a page for owner of family.
-    get data if owner or no, 
-    save in context
+    get data if owner or no, done 
+    save in context done
     display a button to go to family managment if the owner is logged in
     button send us to fam managment component
     component has as 2nd says

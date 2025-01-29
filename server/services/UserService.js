@@ -49,6 +49,8 @@ class UserService {
             return
         }
 
+        const userType = await this.getUserType(user.id)
+
 
         try {
             const payload = {
@@ -57,7 +59,7 @@ class UserService {
             }
     
             const jwtToken = jwt.generateJwt(payload)
-            res.status(200).json({jwt:jwtToken, user_id: user.id})
+            res.status(200).json({jwt:jwtToken, user_id: user.id, userType: userType})
             return
     
         } catch (error) {
@@ -87,15 +89,17 @@ class UserService {
         return 'update user'
     }
 
-    static getUserType = async(req,res) => {
-        const {user_id} = req.query
 
-        const getUser = await User.findOne({where: {id: user_id}})
+
+    
+    static getUserType = async(userId) => {
+
+        const getUser = await User.findOne({where: {id: userId}})
         if(!getUser) return 'User doesnt exist'
 
 
         const owner = await sequelize.query('SELECT * FROM users JOIN families ON users.id = families.owner_id where users.id = ?', {
-            replacements: [user_id],
+            replacements: [userId],
             type: sequelize.QueryTypes.SELECT
         })
 

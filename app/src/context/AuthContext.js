@@ -16,14 +16,13 @@ export const AuthProvider = ({ children }) => {
               localStorage.setItem('username', data.username)
               localStorage.setItem('jwt', response.data.jwt)
               localStorage.setItem('userId', response.data.user_id)
-              setUser({username: data.username, jwt: response.data.jwt, userId: response.data.user_id})
+              setUser({username: data.username, jwt: response.data.jwt, userId: response.data.user_id, userType: response.data.userType})
               navigate('/profile') 
           })
 
       } catch (error) {
           console.log(error)
       }
-
     }
 
   return (

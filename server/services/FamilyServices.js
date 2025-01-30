@@ -231,11 +231,11 @@ class FamilyServices {
     }
 
     static removeMemberFromFamily = async (req,res) => {
-        const {email} = req.body
-        if(!email) return 'Information missing'
+        const {username} = req.body
+        if(!username) return 'Information missing'
 
 
-        const result = await User.findOne({where: {email: email}, include: [{model: FamilyUser}]})
+        const result = await User.findOne({where: {username: username}, include: [{model: FamilyUser}]})
 
         if(!result) return 'Cant find user'
         if(!result.FamilyUser) return 'User doesnt belong in any family'

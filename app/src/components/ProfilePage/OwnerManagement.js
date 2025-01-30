@@ -19,7 +19,6 @@ const OwnerManagement = () => {
     }, [])
 
 
-
     const handleChange = (e) => {
         e.preventDefault()
         const value = e.target.value
@@ -38,11 +37,24 @@ const OwnerManagement = () => {
         } catch (error) {
             console.log(error)            
         }
-        
-
     }
 
-    console.log(familyMembers)
+    const handleRowDelete = async (username) => {
+        try {
+            const response = await axios.post('http://localhost:3080/api/family/remove_family_member', 
+                {username: username}
+            )
+
+            setFamilyMembers(familyMembers.filter((item) => {
+                return item.username !== username
+            }))
+
+
+            alert(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 
     return (
@@ -50,7 +62,7 @@ const OwnerManagement = () => {
             Managment
 
             <form onSubmit={handleSubmit}>
-                <label>Enter the person`s email`:
+                <label>Enter family member email:
                     <input 
                         type="email" 
                         name="email"
@@ -69,15 +81,20 @@ const OwnerManagement = () => {
                     <tr>
                         <th>#</th>
                         <th>email</th>
+                        <th>type</th>
                         <th>actions</th>
                     </tr>
                     {
                         familyMembers.map((item, index) => (
                             <tr key={index}>
                                 <td > {index + 1} </td>
-                                <td > {item.email} </td>
+                                <td > {item.username} </td>
+                                <td >{item.username === user.username ? "Owner" : "Member"}</td>
                                 <td>
-                                    <button onClick={()=> console.log(item.email)}>delete</button>
+                                    {
+                                        item.username !== user.username &&
+                                        <button onClick={ () => handleRowDelete(item.username)}>delete</button>
+                                    }
                                 </td>
                             </tr>
                         ))

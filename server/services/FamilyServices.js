@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const { Family } = require('../models')
 const { User } = require('../models')
 const {FamilyUser} = require('../models')
@@ -233,10 +234,21 @@ class FamilyServices {
         const {email} = req.body
         if(!email) return 'Information missing'
 
-        // continue to delete fam user row
 
+        const result = await User.findOne({where: {email: email}, include: [{model: FamilyUser}]})
 
-        return email
+        if(!result) return 'Cant find user'
+        if(!result.FamilyUser) return 'User doesnt belong in any family'
+
+        const isOwner = await Family.findOne({where: {owner_id: result.id}})
+
+        if(isOwner) return 'Cant delete family owner'
+        
+        
+        const deleteMember = await FamilyUser.destroy({where: {id: result.FamilyUser.id}})
+        if(!deleteMember) return 'Cant find Family member'
+
+        return 'Member deleted'
     }
 }
 

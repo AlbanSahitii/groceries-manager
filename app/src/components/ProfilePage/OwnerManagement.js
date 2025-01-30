@@ -1,9 +1,12 @@
 import { React, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
+import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios'
 
 
 const OwnerManagement = () => {
+    const navigate = useNavigate()
     const {user, setUser} = useContext(AuthContext)
     const [familyMembers, setFamilyMembers] = useState([])
     const [inviteEmail, setInviteEmail] = useState(null)
@@ -59,6 +62,8 @@ const OwnerManagement = () => {
 
     return (
         <>
+            <button onClick={() => navigate('/login')}>go profile</button>
+
             Managment
 
             <form onSubmit={handleSubmit}>

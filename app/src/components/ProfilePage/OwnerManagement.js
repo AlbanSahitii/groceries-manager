@@ -42,6 +42,8 @@ const OwnerManagement = () => {
 
     }
 
+    console.log(familyMembers)
+
 
     return (
         <>
@@ -62,17 +64,26 @@ const OwnerManagement = () => {
             </form>
 
 
-
-
-            <ul>
-                {
-                    familyMembers.map((item, index) => (
-                        <li key={index}> {item.email} </li>
-                    ))
-                }
-            </ul>
-
-
+            <table>
+                <tbody>
+                    <tr>
+                        <th>#</th>
+                        <th>email</th>
+                        <th>actions</th>
+                    </tr>
+                    {
+                        familyMembers.map((item, index) => (
+                            <tr key={index}>
+                                <td > {index + 1} </td>
+                                <td > {item.email} </td>
+                                <td>
+                                    <button onClick={()=> console.log(item.email)}>delete</button>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
         </>
     )
 }

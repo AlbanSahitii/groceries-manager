@@ -48,6 +48,11 @@ class FamilyController {
         res.json(result)
     }
 
+    static removeFromFamily = async (req,res) => {
+        const result = await FamilyServices.removeMemberFromFamily(req,res)
+        res.json(result)
+    }
+
 
 }
 module.exports = FamilyController

@@ -228,6 +228,16 @@ class FamilyServices {
 
         return 'Invite Deleted Sucessfully'
     }
+
+    static removeMemberFromFamily = async (req,res) => {
+        const {email} = req.body
+        if(!email) return 'Information missing'
+
+        // continue to delete fam user row
+
+
+        return email
+    }
 }
 
 module.exports = FamilyServices

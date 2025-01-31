@@ -1,1 +1,14 @@
-make in management an table which will remove the users from family
+Transfer ownership of family
+
+
+1 grocery search
+Grocery family list
+Remember last 10 groceries
+Add groceries to get reminded every monday even if bought
+Grocerie recommender based on season and last purchases
+Group groceries based on types
+Later add an recipe page
+Add recipe based groceries list, if want to make lasagna add button to add all products to buy
+
+
+Maybe: nutrition tracking(suggest when eating low carbs etc)

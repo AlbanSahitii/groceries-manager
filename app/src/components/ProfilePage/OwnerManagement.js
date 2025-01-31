@@ -7,7 +7,7 @@ import axios from 'axios'
 
 const OwnerManagement = () => {
     const navigate = useNavigate()
-    const {user, setUser} = useContext(AuthContext)
+    const {user, setUser, updateContext} = useContext(AuthContext)
     const [familyMembers, setFamilyMembers] = useState([])
     const [inviteEmail, setInviteEmail] = useState(null)
 
@@ -60,6 +60,20 @@ const OwnerManagement = () => {
     }
 
 
+    const handleOwnerTransfer = async (newOwnerUsername) => {
+        try {
+            const response = await axios.post('http://localhost:3080/api/family/change_owner',
+                {ownerUsername: user.username, newOwnerUsername: newOwnerUsername}
+            )
+            localStorage.setItem('userType', "Member")
+            alert(response.data)
+            window.location.reload();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     return (
         <>
             <button onClick={() => navigate('/login')}>go profile</button>
@@ -99,6 +113,12 @@ const OwnerManagement = () => {
                                     {
                                         item.username !== user.username &&
                                         <button onClick={ () => handleRowDelete(item.username)}>delete</button>
+                                    }
+                                </td>
+                                <td>
+                                    {
+                                        item.username !== user.username &&
+                                        <button onClick={ () => handleOwnerTransfer(item.username)}>Transfer Owner</button>
                                     }
                                 </td>
                             </tr>

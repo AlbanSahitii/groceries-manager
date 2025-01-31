@@ -1,9 +1,6 @@
-const { where } = require('sequelize');
-const { Family } = require('../models')
-const { User } = require('../models')
-const {FamilyUser} = require('../models')
-const {FamilyInvites} = require('../models')
-const { sequelize } = require('../models');
+const { Family, User, FamilyUser, FamilyInvites, sequelize } = require('../models')
+const { Op } = require('sequelize');
+
 
 class FamilyServices {
 
@@ -249,6 +246,41 @@ class FamilyServices {
         if(!deleteMember) return 'Cant find Family member'
 
         return 'Member deleted'
+    }
+
+    static ownerChange = async (req,res) => {
+        const {ownerUsername, newOwnerUsername} = req.body
+
+
+        const users = await User.findAll(
+            {
+                where: {
+                    username: {
+                        [Op.or] : [ownerUsername, newOwnerUsername]
+                    }
+                } 
+            }
+        )
+
+
+        if(users.length < 2) return 'One of users doesnt exist'
+
+        const ownerId = users.filter(user => user.username === ownerUsername)[0].id
+        const newOwnerId = users.filter(user => user.username === newOwnerUsername)[0].id
+
+
+        const family = await Family.findOne({where: {owner_id: ownerId}})  
+        if(!family) return 'Family not found'
+
+        try {
+            const newOwner = await Family.update({owner_id: newOwnerId}, {where: {owner_id: ownerId}})
+        } catch (error) {
+            return error.message
+        }
+
+        return 'Owner Changed'
+
+
     }
 }
 

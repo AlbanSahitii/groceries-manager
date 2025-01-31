@@ -53,6 +53,11 @@ class FamilyController {
         res.json(result)
     }
 
+    static changeOwner = async (req,res) => {
+        const result = await FamilyServices.ownerChange(req,res)
+        res.json(result)
+    }
+
 
 }
 module.exports = FamilyController

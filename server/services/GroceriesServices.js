@@ -1,31 +1,63 @@
 const {Groceries} = require('../models')
+const { Op } = require('sequelize');
 
 class GroceriesServices {
 
     static getGrocerie = async (req,res) => {
         const {name} = req.query
-        //todo
-        return name
+        
+        if(!name) return 'Information missing'
+
+        const results = await Groceries.findAll({
+            where: {
+              name: {
+                [Op.like]: `%${name}%`
+              }
+            }
+          });
+          
+        return results
     }
 
     static createGrocerie = async (req,res) => {
-        //todo
+        const {name, categoryId, unit} = req.body
 
+        if(!name || !categoryId || !unit) return 'Information missing'
 
-        return 'creategrocerie'
+        
+        try {
+            const result = await Groceries.create({name: name, category_id: categoryId, unit: unit})
+            return result
+        
+        } catch (error) {
+            return error.message         
+        }
     }
 
     static updateGrocerie = async (req,res) => {
+        const {grocerieId, name, categoryId, unit} = req.body
+        if(!grocerieId || !name || !categoryId || !unit) return 'Information missing'
+            
+        const result = await Groceries.update({name:name, category_id: categoryId, unit: unit}, {where: {id: grocerieId}})
 
-                //todo
+        if(!result) return 'Something went wrong'
 
-        return 'updategrocerie'
+        return result
     } 
 
     static deleteGrocerie = async (req,res) => {
-                //todo
+        const {id} = req.body
+        if(!id) 'information missing'
 
-        return 'deletegrocerie'
+        
+        try {
+            const result = await Groceries.destroy({where: {id: id}})
+            return result
+            
+        } catch (error) {
+            return error.message
+        }
+
     }
 
 

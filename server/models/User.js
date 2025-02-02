@@ -3,7 +3,6 @@ module.exports = (sequelize, DataTypes) => {
         email: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
             validate: {
                 isEmail: true
             }
@@ -11,29 +10,35 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false
-
         },
         username: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
+            allowNull: false
         },
         full_name: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         }
-
     }, {
-        tableName: 'users'
+        tableName: 'users',
+        indexes: [
+            {
+                unique: true,
+                fields: ['email']
+            },
+            {
+                unique: true,
+                fields: ['username']
+            }
+        ]
     });
-
 
     User.associate = models => {
         User.hasOne(models.Family, { 
             foreignKey: "owner_id",
             onDelete: "cascade"
         });
-    
+
         User.hasOne(models.FamilyUser, { 
             foreignKey: "user_id",
             onDelete: "cascade"
@@ -42,19 +47,18 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(models.FamilyGroceries, {
             foreignKey: "user_id",
             onDelete: "cascade"
-        })
+        });
 
         User.hasMany(models.UserFavorites, {
             foreignKey: "user_id",
             onDelete: "cascade"
-        })
+        });
 
         User.hasMany(models.FamilyInvites, {
             foreignKey: "user_id",
             onDelete: "cascade"
-        })
-    
-    }
+        });
+    };
 
     return User;
 }

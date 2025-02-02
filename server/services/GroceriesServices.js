@@ -60,6 +60,19 @@ class GroceriesServices {
 
     }
 
+    // below will be the logic of Family Groceries List
+
+    static addGrocerieInList = async (req,res) => {
+        const {user_id, family_id, groceries_id} = req.body
+
+
+        return {
+            user_id,
+            family_id,
+            groceries_id
+        }
+
+    }
 
 
 }

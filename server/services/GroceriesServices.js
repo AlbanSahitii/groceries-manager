@@ -1,4 +1,4 @@
-const {Groceries} = require('../models')
+const {Groceries, FamilyGroceries, User, Family} = require('../models')
 const { Op } = require('sequelize');
 
 class GroceriesServices {
@@ -64,14 +64,33 @@ class GroceriesServices {
 
     static addGrocerieInList = async (req,res) => {
         const {user_id, family_id, groceries_id} = req.body
+        if(!user_id || !family_id || !groceries_id) return 'Information missing'
 
+        const user = await User.findOne({where: {id: user_id}})
+        if(!user) return 'User doesnt exist'
+        
+        const family = await Family.findOne({where: {id: family_id}})
+        if(!family) return 'Family doesnt exist'
 
-        return {
-            user_id,
-            family_id,
-            groceries_id
+        const grocerie = await Groceries.findOne({where: {id: groceries_id}})
+        if(!grocerie) return 'Grocerie not found'
+
+        try {
+            const result = await FamilyGroceries.create({user_id: user_id, family_id: family_id, groceries_id: groceries_id})
+            return result
+        } catch (error) {
+            return error.message
         }
 
+    }
+
+    static getFamilyList = async (req,res) => {
+        const {family_id} = req.query  
+        if(!family_id) return 'Infromation missing'
+
+        const result = FamilyGroceries.findAll({where: {family_id: family_id}})
+
+        return result
     }
 
 

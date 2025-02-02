@@ -22,6 +22,16 @@ class GroceriesController {
         res.json(result)
     }
 
+    static addGrocerieInList = async (req,res) => {
+        const result = await GroceriesServices.addGrocerieInList(req,res)
+        res.json(result)
+    }
+
+
+    static getFamilyGroceryList = async (req,res) => {
+        const result = await GroceriesServices.getFamilyList(req,res)
+        res.json(result)
+    }
 }
 
 

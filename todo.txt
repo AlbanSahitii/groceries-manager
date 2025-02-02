@@ -1,5 +1,7 @@
-Grocery family list
-Remember last 10 groceries
+make add in family list from search page button functional
+make purchased button in groceries functional
+
+
 Add groceries to get reminded every monday even if bought
 Grocerie recommender based on season and last purchases
 Group groceries based on types

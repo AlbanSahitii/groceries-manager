@@ -32,6 +32,16 @@ class GroceriesController {
         const result = await GroceriesServices.getFamilyList(req,res)
         res.json(result)
     }
+
+    static purchaseGrocery = async (req,res) => {
+        const result = await GroceriesServices.purchaseGrocery(req,res)
+        res.json(result)
+    }
+
+    static getLastTenGroceries = async (req,res) => {
+        const result = await GroceriesServices.getLastTenGroceries(req,res)
+        res.json(result)
+    }
 }
 
 

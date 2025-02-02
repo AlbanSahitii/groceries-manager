@@ -1,4 +1,4 @@
-const {Groceries, FamilyGroceries, User, Family} = require('../models')
+const {Groceries, FamilyGroceries, User, Family, PurchasedGroceries, sequelize} = require('../models')
 const { Op } = require('sequelize');
 
 class GroceriesServices {
@@ -75,12 +75,12 @@ class GroceriesServices {
         const grocerie = await Groceries.findOne({where: {id: groceries_id}})
         if(!grocerie) return 'Grocerie not found'
 
-        try {
-            const result = await FamilyGroceries.create({user_id: user_id, family_id: family_id, groceries_id: groceries_id})
-            return result
-        } catch (error) {
-            return error.message
-        }
+        const familyList = await FamilyGroceries.findOne({where: {family_id: family_id, groceries_id: groceries_id}})
+        if(familyList) return 'Grocery found in list'
+
+
+        const result = await FamilyGroceries.create({user_id: user_id, family_id: family_id, groceries_id: groceries_id})
+        return result
 
     }
 
@@ -88,11 +88,68 @@ class GroceriesServices {
         const {family_id} = req.query  
         if(!family_id) return 'Infromation missing'
 
-        const result = FamilyGroceries.findAll({where: {family_id: family_id}})
+        const result = FamilyGroceries.findAll(
+            {include: 
+                [{model:Groceries, required:true}]
+            },
+            {where: 
+                {family_id: family_id}
+            }
+        )
 
         return result
     }
 
+    static purchaseGrocery = async (req,res) => {
+        const {family_groceries_id} = req.body
+        if(!family_groceries_id) return 'information missing'
+
+        const familyListGrocery = await FamilyGroceries.findOne({where: {id: family_groceries_id}})
+        if(!familyListGrocery) return 'Grocery not found in list. Please add groceries to your family list'
+
+        const familyId = familyListGrocery.family_id
+        const grocerieId = familyListGrocery.groceries_id
+
+
+        const [purchasedGrocery] = await PurchasedGroceries.findAll({where: {family_id: familyId, groceries_id: grocerieId}})
+       //there are 2 transactions, first one (purchasedgrocery) is when family already had bought before this type of grocery, !purchased is when they didnt buy before
+        try {
+            if(purchasedGrocery) {
+                await sequelize.transaction(async (transaction) => {
+                    await Promise.all([
+                        PurchasedGroceries.update({ createdAt: new Date()},{where: {id: purchasedGrocery.id}}, {transaction }),
+                        FamilyGroceries.destroy({where: {groceries_id: grocerieId, family_id: familyId}}, { transaction })
+                    ]);
+                });
+                return 'Purchased successfully #1'
+
+            } else if(!purchasedGrocery) {
+                await sequelize.transaction(async (transaction) => {
+                    await Promise.all([
+                        PurchasedGroceries.create({family_id: familyId, groceries_id: grocerieId}, {transaction }),
+                        FamilyGroceries.destroy({where: {groceries_id: grocerieId, family_id: familyId}}, { transaction })
+                    ]);
+                });
+                return 'Purchased successfully #2'
+
+            } else {
+                return 'something else happend !! check'
+            }
+        } catch (error) {
+            return error.message
+        }
+    }
+
+    static getLastTenGroceries = async (req,res) => {
+        const {family_id} = req.body
+        if(!family_id) return 'information missing'
+
+        const result = await PurchasedGroceries.findAll({order: [['createdAt', 'DESC']], limit: 10}, {where: {family_id:family_id}})
+
+        return result
+
+
+    }
 
 }
 

@@ -36,7 +36,7 @@ const Profile = () => {
     return (
         <>
                 <button onClick={() => console.log(`this will be settings section`)}>settings</button>
-                <button onClick={() => console.log(`this will be grocery list section`)}>groceries</button>
+                <button onClick={() => navigate('/groceries')}>groceries</button>
                 <button onClick={() => navigate('/search')}>find grocery</button>
 
                 <button onClick={() => navigate('/login')}>go back</button>

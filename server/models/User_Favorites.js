@@ -19,6 +19,15 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         tableName: 'user_favorites'
     });
+
+    UserFavorites.associate = models => {
+        UserFavorites.belongsTo(models.User, {
+            onDelete: "cascade"
+        })
+        UserFavorites.belongsTo(models.Groceries, {
+            onDelete: "cascade"
+        })
+    }
     
     return UserFavorites;
 }

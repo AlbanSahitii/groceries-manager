@@ -22,5 +22,21 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'groceries'
     });
     
+    Groceries.associate = models => {
+        Groceries.hasMany(models.UserFavorites, { 
+            foreignKey: "groceries_id",
+            onDelete: "cascade"
+        })
+
+        Groceries.hasMany(models.PurchasedGroceries, {
+            foreignKey: "groceries_id",
+            onDelete: "cascade"
+        })
+
+        Groceries.hasOne(models.GroceriesCategory, {
+            onDelete: "cascade"
+        })
+    }
+
     return Groceries;
 }

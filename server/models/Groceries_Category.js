@@ -13,6 +13,13 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         tableName: 'groceries_category'
     });
+
+    GroceriesCategory.associate = models => {
+        GroceriesCategory.hasMany(models.Groceries, {
+            foreignKey: "category_id",
+            onDelete: "cascade"
+        })
+    }
     
     return GroceriesCategory;
 }

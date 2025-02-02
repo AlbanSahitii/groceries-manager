@@ -26,5 +26,17 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'family_groceries'
     })
     
+    FamilyGroceries.associate = models => {
+        FamilyGroceries.belongsTo(models.User, {
+            onDelete: "cascade"
+        })
+        FamilyGroceries.belongsTo(models.Family, {
+            onDelete: "cascade"
+        })
+        FamilyGroceries.belongsTo(models.Groceries, {
+            onDelete: "cascade"
+        })
+    }
+
     return FamilyGroceries;
 }

@@ -30,12 +30,29 @@ module.exports = (sequelize, DataTypes) => {
 
     User.associate = models => {
         User.hasOne(models.Family, { 
+            foreignKey: "owner_id",
             onDelete: "cascade"
         });
     
         User.hasOne(models.FamilyUser, { 
+            foreignKey: "user_id",
             onDelete: "cascade"
         });
+
+        User.hasMany(models.FamilyGroceries, {
+            foreignKey: "user_id",
+            onDelete: "cascade"
+        })
+
+        User.hasMany(models.UserFavorites, {
+            foreignKey: "user_id",
+            onDelete: "cascade"
+        })
+
+        User.hasMany(models.FamilyInvites, {
+            foreignKey: "user_id",
+            onDelete: "cascade"
+        })
     
     }
 

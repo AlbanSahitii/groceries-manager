@@ -19,12 +19,32 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'families'
     });
 
-    Profile.associate = models => {
-        Profile.belongsTo(models.User,{
-            foreignKey: {
-                allowNull: false
-            }
+    Family.associate = models => {
+        Family.belongsTo(models.User,{
+            foreignKey: "owner_id"
         })   
+
+
+
+        Family.hasMany(models.FamilyGroceries, {
+            foreignKey: "family_id",
+            onDelete: "cascade"
+        })
+
+        Family.hasMany(models.PurchasedGroceries, {
+            foreignKey: "family_id",
+            onDelete: "cascade"
+        })
+
+        Family.hasMany(models.FamilyUser, {
+            foreignKey: "family_id",
+            onDelete: "cascade"
+        })
+
+        Family.hasMany(models.FamilyInvites, { 
+            foreignKey: "family_id",
+            onDelete: "cascade"
+        })
     }
     
     return Family;

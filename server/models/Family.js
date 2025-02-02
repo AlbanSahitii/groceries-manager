@@ -19,11 +19,13 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'families'
     });
 
-    // Family.belongsTo(sequelize.models.User, { 
-    //     foreignKey: "owner_id", 
-    // });
-    // there is a problem with belong to. if needed in future fix it
-
+    Profile.associate = models => {
+        Profile.belongsTo(models.User,{
+            foreignKey: {
+                allowNull: false
+            }
+        })   
+    }
     
     return Family;
 }

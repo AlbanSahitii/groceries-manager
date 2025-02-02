@@ -27,12 +27,17 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'users'
     });
 
-    User.hasOne(sequelize.models.Family, { 
-        foreignKey: "owner_id"
-    });
-    User.hasOne(sequelize.models.FamilyUser, { 
-        foreignKey: "user_id"
-    });
+
+    User.associate = models => {
+        User.hasOne(models.Family, { 
+            onDelete: "cascade"
+        });
+    
+        User.hasOne(models.FamilyUser, { 
+            onDelete: "cascade"
+        });
+    
+    }
 
     return User;
 }

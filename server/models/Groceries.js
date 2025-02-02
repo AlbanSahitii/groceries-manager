@@ -34,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         })
 
         Groceries.hasOne(models.GroceriesCategory, {
+            foreignKey: "id",
             onDelete: "cascade"
         })
     }

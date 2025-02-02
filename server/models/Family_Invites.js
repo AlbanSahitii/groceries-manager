@@ -26,9 +26,11 @@ module.exports = (sequelize, DataTypes) => {
 
     FamilyInvites.associate = models => { 
         FamilyInvites.belongsTo(models.Family, {
+            foreignKey: "family_id",
             onDelete: "cascade"
         })
         FamilyInvites.belongsTo(models.User, {
+            foreignKey: "user_id",
             onDelete: "cascade"
         })
     }

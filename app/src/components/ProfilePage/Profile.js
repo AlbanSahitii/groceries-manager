@@ -12,8 +12,8 @@ const Profile = () => {
     const {user, setUser} = useContext(AuthContext)
     const [userFam, setUserFam] = useState(null)
     const navigate = useNavigate();
-
     useEffect(() => {
+
         
         const fetchData = async () => {
 
@@ -31,7 +31,7 @@ const Profile = () => {
         fetchData()
     }, [])
 
-    console.log(user);
+
 
     return (
         <>
@@ -44,6 +44,9 @@ const Profile = () => {
                         setUser(null)
                         localStorage.removeItem('jwt')
                         localStorage.removeItem('username')
+                        localStorage.removeItem('userId')
+                        localStorage.removeItem('userType')
+                        localStorage.removeItem('familyId')
                     }}>logout</button>
                     <br></br>
                     <br></br>

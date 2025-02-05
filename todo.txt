@@ -10,3 +10,6 @@ Add recipe based groceries list, if want to make lasagna add button to add all p
 
 
 Maybe: nutrition tracking(suggest when eating low carbs etc)
+
+
+*****migrations need a fix so we change database.sequalize.sync() method in index.js and we use migrations insted of model db sql creating

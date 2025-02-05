@@ -3,23 +3,21 @@ import { AuthContext } from "../context/AuthContext";
 import { Outlet, Navigate } from "react-router-dom";
 
 const AuthLayout = () => {
-  const { user, setUser } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(true);
-
+  const { user, setUser, checkUser } = useContext(AuthContext);
+  const username = localStorage.getItem('username')
   useEffect(() => {
-    const username = localStorage.getItem("username");
-    const jwt = localStorage.getItem("jwt");
-    const userId = localStorage.getItem("userId");
-    const userType = localStorage.getItem('userType')
-    const familyId = localStorage.getItem('familyId')
-
-    if (!user && username && jwt && userId && userType) {
-      setUser({ username, jwt, userId,userType, familyId });
+    if(user){
+      const data = {
+        username: user.username,
+        jwtToken: user.jwt
+      }
+      checkUser(data)
     }
-    setIsLoading(false);
-  }, [user, setUser]);
+  }, [0]);
 
 
+
+  
   return user ? <Outlet /> : <Navigate to="/login" />;
 };
 

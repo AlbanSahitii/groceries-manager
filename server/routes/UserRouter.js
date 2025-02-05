@@ -9,6 +9,7 @@ UserRouter.post('/register', UserController.register)
 UserRouter.post('/login', UserController.login)
 UserRouter.delete('/delete',Middleware.jwtAuth, UserController.delete)
 UserRouter.put('/update', Middleware.jwtAuth, UserController.update)
+UserRouter.post('/validateUser', UserController.validateUser)
 
 
 module.exports = UserRouter

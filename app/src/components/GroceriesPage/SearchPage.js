@@ -1,8 +1,11 @@
-import {useState} from 'react'
+import {useContext, useState} from 'react'
 import axios from 'axios'
+import { AuthContext } from '../../context/AuthContext'
+
 const SearchPage = () => {
     const [searchGrocerie, setSearchGrocerie] = useState("")
     const [groceries, setGroceries] = useState([])
+    const {user, setUser} = useContext(AuthContext)
 
     const handleChange = (e) => {
         e.preventDefault()

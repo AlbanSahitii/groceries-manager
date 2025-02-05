@@ -33,6 +33,7 @@ class UserService {
 
     static loginUser = async (req,res) => {
         const { username, password } = req.body;
+        if(!username || !password) return 'information missing'
 
         const user = await User.findOne({where: {username: username }})
 
@@ -53,13 +54,10 @@ class UserService {
 
 
         try {
-            const payload = {
-                username: username,
-                password:password
-            }
+            const payload = {user}
     
             const jwtToken = jwt.generateJwt(payload)
-            res.status(200).json({jwt:jwtToken, user_id: user.id, userType: userType})
+            res.status(200).json({userId: user.id, jwt:jwtToken, userType: userType})
             return
     
         } catch (error) {
@@ -112,6 +110,19 @@ class UserService {
         
     }
 
+    static validateUser = async (req,res) => {
+        const {username, jwtToken} = req.body
+        if(!username || !jwtToken) return 'Information missing'
+
+        const user = await User.findOne({where: {username: username}})
+        if(!user) return 'User doesnt exist'
+
+        const validateJWT = await jwt.verifyJwt(jwtToken)
+        if(!validateJWT) return 'Invalid JWT token'
+        if(username !== validateJWT.user.username) return 'Information is invalid'
+
+        return jwtToken
+    }
 }
 
 module.exports = UserService

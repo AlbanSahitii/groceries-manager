@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-            autoIncrement: false,
+            autoIncrement: true,
           }        
     }, {
         tableName: 'groceries_category'

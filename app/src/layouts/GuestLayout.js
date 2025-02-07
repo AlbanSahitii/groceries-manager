@@ -8,6 +8,7 @@ const GuestLayout = () => {
     const username = localStorage.getItem('username')
     const userId = localStorage.getItem('userId')
     if(!user && username && jwt) {
+        console.log(!user);
         setUser({jwt,username, userId})
     }
     

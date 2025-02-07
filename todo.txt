@@ -1,6 +1,11 @@
-make add in family list from search page button functional
 make purchased button in groceries functional
 
+start frontend design
+
+1 main page in root folder. 
+1 login and register(todo!! asap)
+1 profile and family managment for owner
+search and groceries list
 
 Add groceries to get reminded every monday even if bought
 Grocerie recommender based on season and last purchases

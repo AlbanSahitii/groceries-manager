@@ -19,7 +19,7 @@ const Profile = () => {
 
             const response = await axios.get(`http://localhost:3080/api/family/check_user?user_id=${user.userId}`)
             setUser({...user, familyId: response.data?.family_id})
-            localStorage.setItem('familyId', response.data.familyId)
+            localStorage.setItem('familyId', response.data.family_id)
             if (response.data.message === "User doesn`t have an family") {
                 setUserFam(false)
             } else if (response.data.message === "User has an active invite") {

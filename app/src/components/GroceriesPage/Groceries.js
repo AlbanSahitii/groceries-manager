@@ -18,6 +18,17 @@ const Groceries = () => {
 
     }, [])
 
+    const handlePurchase = async(id) => {
+        
+        await axios.post(`http://localhost:3080/api/groceries/purchase_grocery`, {family_groceries_id: id})
+        .then(response=> {
+            console.log(response);
+            setGroceries(groceries.filter((grocerie) => grocerie.id !== id))
+
+        }).catch(error => console.log(error))
+
+    }
+
     console.log(groceries);
     return (
         <>
@@ -32,7 +43,7 @@ const Groceries = () => {
                         <tr key={index}>
                             <td> {grocerie.Grocery.name}</td>
                             <td>
-                                <button onClick={()=> console.log(`pressed ${grocerie.Grocery.id}`)}>Purchased</button>
+                                <button onClick={()=> handlePurchase(grocerie.id)}>Purchased</button>
                             </td>
                         </tr>
                     ))

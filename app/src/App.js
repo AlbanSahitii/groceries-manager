@@ -1,7 +1,9 @@
 import {React, useContext} from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
-import LoginPage from "./components/LoginPage/Login.js"
+import LoginPage from "./components/GuestPage/Login.js"
+import Main from "./components/GuestPage/Main.js"
+import RegisterPage from "./components/GuestPage/Register.js"
 import ProfilePage from "./components/ProfilePage/Profile.js"
 import OwnerManagement from "./components/ProfilePage/OwnerManagement.js";
 import AuthLayout from "./layouts/AuthLayout.js"
@@ -14,6 +16,8 @@ const App = () => {
         <Routes>
           <Route element={<GuestLayout />}>
             <Route path="/login" element={<LoginPage />}/>
+            <Route path="/register" element={<RegisterPage />}/>
+            <Route path="/" element={<Main />}/>
           </Route>
 
         {/* protected*/}

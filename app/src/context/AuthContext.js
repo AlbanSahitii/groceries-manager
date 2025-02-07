@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { createPath, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export const AuthContext = createContext();
@@ -8,6 +8,12 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
+  const register = async (data) => {
+
+      await axios.post('http://localhost:3080/api/user/register', data)
+      .then()
+      .catch(error => console.log(error))
+  }
 
   const login = async (data) => {
         try {
@@ -27,6 +33,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   const checkUser = async (data) => {
+    console.log(data);
       try {
         await axios.post('http://localhost:3080/api/user/validateUser', data)
         .then(response => { 
@@ -54,7 +61,7 @@ export const AuthProvider = ({ children }) => {
   
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login, updateContext, checkUser }}>
+    <AuthContext.Provider value={{ user, setUser, login, register, updateContext, checkUser }}>
       {children}
     </AuthContext.Provider>
   );

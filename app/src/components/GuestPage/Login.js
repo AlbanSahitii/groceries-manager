@@ -1,17 +1,12 @@
 import {React,useState, useContext, useEffect}  from 'react'
-
+import { useNavigate } from 'react-router-dom'
 
 import { AuthContext } from '../../context/AuthContext'
 
 const Login = () =>{
     const [inputs, setInputs] = useState({})
-    const {user, login} = useContext(AuthContext)
-    
-    const username = localStorage.getItem('username')
-    const jwt = localStorage.getItem('jwt')
-    const userId = localStorage.getItem('userId')
-    const userType = localStorage.getItem('userType')
-
+    const {login} = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -24,6 +19,8 @@ const Login = () =>{
         const name = e.target.name
         setInputs(values => ({...values, [name]: value}))
     }
+
+
 
     return (
         <>
@@ -46,6 +43,9 @@ const Login = () =>{
                     </label>
                     <input type="submit" />
             </form>
+        
+        <button onClick={()=> navigate('/register')}> register </button>
+        <button onClick={()=> navigate('/')}> go back </button>
         </>
     )
 

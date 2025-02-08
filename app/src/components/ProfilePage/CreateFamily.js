@@ -1,6 +1,7 @@
 import { React, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios'
+import carrotLogo from './src/img/carrot-icon.png'
 
 const CreateFamily = () => {
     const [inputs, setInputs] = useState({})
@@ -38,18 +39,20 @@ const CreateFamily = () => {
         <>
         Create FAm
 
-        <form onSubmit={handleSubmit}>
-            <label>Enter your family name:
-                <input 
-                    type="text" 
-                    name="familyName"
-                    value = {inputs.familyName || ""} 
-                    onChange={handleChange}
-                />
-            </label>
-            <input type="submit" />
-        </form>
-
+        <div className='create-family'>
+            <img src={carrotLogo}></img>
+            <form onSubmit={handleSubmit}>
+                <label>Enter your family name:
+                    <input 
+                        type="text" 
+                        name="familyName"
+                        value = {inputs.familyName || ""} 
+                        onChange={handleChange}
+                    />
+                </label>
+                <input type="submit" />
+            </form>
+        </div>
         </>
     )
 }

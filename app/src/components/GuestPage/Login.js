@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
 
 import carrotLogo from './src/img/carrot-icon.png'
-
+import './src/styles/auth.css'
+import gmailLogo from './src/img/icons8-gmail-48.png'
 
 const Login = () =>{
     const [inputs, setInputs] = useState({})
@@ -22,42 +23,52 @@ const Login = () =>{
         setInputs(values => ({...values, [name]: value}))
     }
 
-
+    console.log(inputs)
 
     return (
         <>
-            <div className='form-section'>
-                <img src={carrotLogo}></img>
-                <h1>Welcome Back</h1>
-                <p>Please enter your details</p>
+        <div className='login-page-container'>
 
-                <form onSubmit={handleSubmit}>
-                    <label>Enter your username:
-                    <input
-                        type="text" 
-                        name="username"
-                        value = {inputs.username || ""} 
-                        onChange={handleChange}
-                        />
-                    </label>
-                    <label>Enter your password:
-                        <input 
-                        type="password" 
-                        name="password" 
-                        value = {inputs.password || ""} 
-                        onChange={handleChange}
-                        />
-                        </label>
-                        <input type="submit" />
-                </form>
-                <button><img alt='gmail logo'></img>Login using gmail</button>
-            
-                <p>Don`t have an account? <a onClick={() => navigate('/register')}>register</a></p>
+            <div className='login-page-left-section'>
             </div>
 
-        
-        <button onClick={()=> navigate('/register')}> register </button>
-        <button onClick={()=> navigate('/')}> go back </button>
+            <div className='login-page-form-section'>
+
+                <div className='login-page-logo'>
+                    <img src={carrotLogo}></img>
+                </div>
+                <div className='login-page-info'>
+                    <h1>Welcome Back</h1>
+                    <br></br>
+                    <p>Please enter your details</p>
+                </div>
+                <div className='login-page-form'>
+
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="text" 
+                            name="username"
+                            placeholder='Username'
+                            value = {inputs.username || ""} 
+                            onChange={handleChange}
+                            />
+                            <input 
+                            type="password" 
+                            name="password" 
+                            placeholder='Password'
+                            value = {inputs.password || ""} 
+                            onChange={handleChange}
+                            />
+                            <br></br>
+                            <input  type="submit" />
+                    </form>
+                <button className='login-page-gmail-auth'><img src={gmailLogo} alt='gmail logo'></img>Login using gmail</button>
+                </div>
+                <div>
+                    <p>Don`t have an account? <a onClick={() => navigate('/register')}>register</a></p>
+                </div>
+            </div>
+        </div>
         </>
     )
 

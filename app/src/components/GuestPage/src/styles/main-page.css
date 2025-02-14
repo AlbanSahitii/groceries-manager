@@ -2,18 +2,21 @@
     margin: 0;
     padding: 0;
 }
-body {
+.main-page-container {
+
     background: url('../../../src/img/background-fruits.png') no-repeat center center fixed;
     background-size: cover;
-
+    background-position: center;
+    height: 100vh;
+  
 }
 
-.logo > img {
+.main-page-logo > img {
     height: 50px;
     width: auto;
 }
 
-.nav-container {
+.main-page-nav-container {
     padding: 0 20px 0 20px;
     margin: 20px;
     width: 80%;
@@ -32,27 +35,27 @@ body {
     z-index: 1000;
 }
 
-nav{
+.main-page-container > nav{
     display: flex;
     justify-content: center;
 
 }
- a {
+.main-page-nav-information > a, .main-page-nav-auth > a {
     text-decoration: none;
     color: white;
     margin: 0 10px 0 10px 
 }
 
-.hero-section {
+.main-page-hero-section {
     margin-top: 10%;
     margin-left: 20%;
 }
 
-.hero-section > h1 {
+.main-page-hero-section > h1 {
     font-size: 56px;
 }
 
-.hero-section > button {
+.main-page-hero-section > button {
     padding: 15px;
     background-color: #578E7E;
     color: white;

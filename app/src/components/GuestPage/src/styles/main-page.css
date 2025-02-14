@@ -2,3 +2,64 @@
     margin: 0;
     padding: 0;
 }
+body {
+    background: url('../../../src/img/background-fruits.png') no-repeat center center fixed;
+    background-size: cover;
+
+}
+
+.logo > img {
+    height: 50px;
+    width: auto;
+}
+
+.nav-container {
+    padding: 0 20px 0 20px;
+    margin: 20px;
+    width: 80%;
+    height: 50px;
+    background-color: #3D3D3D;
+    border-radius: 50px;
+
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+	align-content: center;
+
+    position: fixed;
+    z-index: 1000;
+}
+
+nav{
+    display: flex;
+    justify-content: center;
+
+}
+ a {
+    text-decoration: none;
+    color: white;
+    margin: 0 10px 0 10px 
+}
+
+.hero-section {
+    margin-top: 10%;
+    margin-left: 20%;
+}
+
+.hero-section > h1 {
+    font-size: 56px;
+}
+
+.hero-section > button {
+    padding: 15px;
+    background-color: #578E7E;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    margin-top: 20px;
+    cursor: pointer;
+
+}
+

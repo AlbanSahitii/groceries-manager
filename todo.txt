@@ -1,19 +1,2 @@
-
-start frontend design
-
-1 main page in root folder. 
-1 login and register(todo!! asap)
-1 profile and family managment for owner
-search and groceries list
-
-Add groceries to get reminded every monday even if bought
-Grocerie recommender based on season and last purchases
-Group groceries based on types
-Later add an recipe page
-Add recipe based groceries list, if want to make lasagna add button to add all products to buy
-
-
-Maybe: nutrition tracking(suggest when eating low carbs etc)
-
-
+signup
 *****migrations need a fix so we change database.sequalize.sync() method in index.js and we use migrations insted of model db sql creating

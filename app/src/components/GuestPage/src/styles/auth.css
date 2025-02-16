@@ -1,5 +1,5 @@
 .login-page-logo > img {
-    height: 40px;
+    height: 100px;
 }
 
 .login-page-container {
@@ -120,4 +120,17 @@
     height: 20px;
     width: auto;
 
+}
+
+.register-form > form > input {
+    width: 40%;
+    margin-right: 10%;
+}
+
+.register-form > form > input:first-child {
+    width: 90%;
+    text-align: center;
+}
+.register-form > form > input:last-child{
+    width: 100%;
 }

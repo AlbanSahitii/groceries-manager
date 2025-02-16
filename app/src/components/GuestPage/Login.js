@@ -42,7 +42,7 @@ const Login = () =>{
                     <br></br>
                     <p>Please enter your details</p>
                 </div>
-                <div className='login-page-form'>
+                <div className="login-page-form ">
 
                     <form onSubmit={handleSubmit}>
                         <input

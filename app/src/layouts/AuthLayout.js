@@ -1,23 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { Outlet, Navigate } from "react-router-dom";
+// AuthLayout.js
+import React, { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { Outlet, Navigate } from 'react-router-dom';
 
 const AuthLayout = () => {
-  const { user, setUser, checkUser } = useContext(AuthContext);
-  const username = localStorage.getItem('username')
-  useEffect(() => {
-    if(user){
-      const data = {
-        username: user.username,
-        jwtToken: user.jwt
-      }
-      checkUser(data)
-    }
-  }, [0]);
+  const { user, loading } = useContext(AuthContext);
 
+  if (loading) {
+    return <div>Loading...</div>; 
+  }
 
-
-  
   return user ? <Outlet /> : <Navigate to="/login" />;
 };
 

@@ -1,19 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { Navigate, Outlet } from "react-router-dom";
+// GuestLayout.js
+import React, { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { Navigate, Outlet } from 'react-router-dom';
 
 const GuestLayout = () => {
-    const { user, setUser } = useContext(AuthContext);
-    useEffect(() => {
-        const jwt = localStorage.getItem('jwt');
-        const username = localStorage.getItem('username');
-        const userId = localStorage.getItem('userId');
-        if (!user && username && jwt) {
-            setUser({ jwt, username, userId });
-        }
-    }, []);
+  const { user, loading } = useContext(AuthContext);
 
-    return !user?.username || !user?.jwt || !user?.userId ? <Outlet /> : <Navigate to="/profile" />;
+  if (loading) {
+    return <div>Loading...</div>; // Replace with a loading spinner or placeholder
+  }
+
+  return !user ? <Outlet /> : <Navigate to="/profile" />;
 };
 
 export default GuestLayout;

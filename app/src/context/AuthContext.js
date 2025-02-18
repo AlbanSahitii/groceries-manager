@@ -7,6 +7,19 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true); 
+  
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    const username = localStorage.getItem('username');
+    const userId = localStorage.getItem('userId');
+
+    if (jwt && username && userId) {
+      setUser({ jwt, username, userId });
+    }
+    setLoading(false);
+  }, []);
+
 
   const register = async (data) => {
 
@@ -72,7 +85,7 @@ export const AuthProvider = ({ children }) => {
   
 
   return (
-    <AuthContext.Provider value={{ logout, user, setUser, login, register, updateContext, checkUser }}>
+    <AuthContext.Provider value={{loading, logout, user, setUser, login, register, updateContext, checkUser }}>
       {children}
     </AuthContext.Provider>
   );

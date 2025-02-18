@@ -37,19 +37,17 @@ const CreateFamily = () => {
 
     return (
         <>
-        Create FAm
-
         <div className='create-family'>
-            <img src={carrotLogo}></img>
+            <h1>Create your family</h1>
             <form onSubmit={handleSubmit}>
-                <label>Enter your family name:
                     <input 
                         type="text" 
                         name="familyName"
                         value = {inputs.familyName || ""} 
                         onChange={handleChange}
+                        placeholder='Family Name'
                     />
-                </label>
+                    <br></br>
                 <input type="submit" />
             </form>
         </div>

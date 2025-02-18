@@ -1,2 +1,4 @@
-signup
+first page for creating and accepting in case they have invite
+if they dont only create
+
 *****migrations need a fix so we change database.sequalize.sync() method in index.js and we use migrations insted of model db sql creating

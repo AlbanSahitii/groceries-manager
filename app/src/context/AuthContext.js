@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { createPath, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -13,6 +13,17 @@ export const AuthProvider = ({ children }) => {
       await axios.post('http://localhost:3080/api/user/register', data)
       .then()
       .catch(error => console.log(error))
+  }
+
+  const logout = () => {
+
+    setUser(null)
+    localStorage.removeItem('jwt')
+    localStorage.removeItem('username')
+    localStorage.removeItem('userId')
+    localStorage.removeItem('userType')
+    localStorage.removeItem('familyId')
+    navigate('/login')
   }
 
   const login = async (data) => {
@@ -61,7 +72,7 @@ export const AuthProvider = ({ children }) => {
   
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login, register, updateContext, checkUser }}>
+    <AuthContext.Provider value={{ logout, user, setUser, login, register, updateContext, checkUser }}>
       {children}
     </AuthContext.Provider>
   );

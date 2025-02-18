@@ -2,10 +2,7 @@ import { React, useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import carrotLogo from './src/img/carrot-icon.png'
-import familyIcon from './src/img/family.png'
-
-
+import FamilyIcon from './src/img/profile-icon.png'
 const AcceptFamily = () => {
     const {user, setUser} = useContext(AuthContext)
     const navigate= useNavigate()
@@ -41,21 +38,29 @@ const AcceptFamily = () => {
 
     return (
         <>
-            Accept FAm - fam id {user.familyId}
-            <br /> 
-            <br /> 
-            <button onClick={acceptFamilyInviteSubmit}>Accept the invite</button>
-            <button onClick={declineFamilyInviteSubmit}>Decline the invite</button>
-
-            <div className='accept-family-section'>
-                <img src={carrotLogo} alt='carrot logo'></img>
-                    <img src={familyIcon}></img>
-                    <p>{user.familyId}</p>
-                    <button onClick={acceptFamilyInviteSubmit}>Join</button>
-
+        {/** the information that is static will display good information from database */}
+        <div className='accept-family'>
+            <h1>{`${user.familyId} has invited you`}</h1>
+            <div className='accept-family-card'>
+                <div className='accept-family-card-header'>
+                    <img src={FamilyIcon}></img>
+                    <div className='accept-family-card-header-information'>
+                        <p className='created-p'>{`created on 2022`}</p>
+                        <p className='family-name'>{`${user.familyId} Family`}</p>
+                        <p className='expire-p'>{`expires in 3days`}</p>
+                    </div>
+                </div>
+                <div className='accept-family-card-body'>
+                    <p ><img src={FamilyIcon}></img>Alban - admin</p>
+                    <p><img src={FamilyIcon}></img>Alban - member</p>
+                    <p ><img src={FamilyIcon}></img>Alban - Member</p>
+                </div>
+                <div className='accept-family-card-footer'>
+                    <button className='accept' onClick={acceptFamilyInviteSubmit}>Accept</button>
+                    <button className='decline' onClick={declineFamilyInviteSubmit}>Decline</button>
+                </div>
             </div>
-
-
+        </div> 
         </>
     )
 }

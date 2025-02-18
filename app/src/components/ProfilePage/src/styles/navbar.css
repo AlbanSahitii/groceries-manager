@@ -1,0 +1,43 @@
+.auth-navbar {
+    width: 80%;
+    height: 60px;
+    background-color: #3D3D3D;
+    border-radius: 38px;
+    padding: 0 20px 0 20px;
+    margin: 0 auto;
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+	align-content: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.auth-navbar > img {
+    height: 38px;
+}
+
+.auth-navbar > ul > a > li,
+.auth-navbar > ul > li {
+    color: white;
+    display: inline;
+    margin: 20px; 
+    
+}
+.auth-navbar > ul > a {
+    text-decoration: none;
+}
+
+.auth-navbar > ul > a:hover {
+    cursor: pointer;
+}
+
+
+.auth-navbar > ul > li >button {
+    background-color: inherit;
+    border: none;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}

@@ -279,9 +279,8 @@ class FamilyServices {
         }
 
         return 'Owner Changed'
-
-
     }
+
 }
 
 module.exports = FamilyServices

@@ -7,6 +7,23 @@ const CreateFamily = () => {
     const [inputs, setInputs] = useState({})
     const {user, setUser} = useContext(AuthContext)
 
+    console.log(user)
+    const handleSubmitWithInvite = async(e)=> {
+        e.preventDefault();
+    
+        try {
+            const deleteInvite = await axios.post(`http://localhost:3080/api/family/decline_invite`, 
+                {family_id: user.familyId, user_id: user.userId})
+            
+            const createFamily = await axios.post(`http://localhost:3080/api/family/create`, 
+                {family_name: inputs.familyName, user_id: user.userId})
+            
+            window.location.reload();
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 
 
@@ -39,7 +56,7 @@ const CreateFamily = () => {
         <>
         <div className='create-family'>
             <h1>Create your family</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={!user.familyId ? handleSubmit : handleSubmitWithInvite}>
                     <input 
                         type="text" 
                         name="familyName"

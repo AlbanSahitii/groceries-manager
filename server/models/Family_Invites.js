@@ -18,7 +18,12 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id'
               }
   
-        }
+        },
+        expiresAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+          },
+      
 
     }, {
         tableName: 'family_invites'

@@ -1,4 +1,4 @@
-import { React, useContext, useState } from 'react'
+import { React, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,24 @@ import FamilyIcon from './src/img/profile-icon.png'
 const AcceptFamily = () => {
     const {user, setUser} = useContext(AuthContext)
     const navigate= useNavigate()
+    const [familyInvite, setFamilyInvite] = useState(null)
+
+    useEffect(  ()=> {
+        const fetchData= async() => {
+            try {
+                const result = await axios.post('http://localhost:3080/api/family/get_invite_information',
+                    {familyId:user.familyId, userId: user.userId}
+                )
+                setFamilyInvite(result.data)
+            } catch (error) {
+                alert(error)
+            }
+        }
+        fetchData()
+    }, [0])
+    
+    console.log(familyInvite)
+
     const acceptFamilyInviteSubmit = async (e) => {
         e.preventDefault()
 

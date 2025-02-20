@@ -13,9 +13,10 @@ export const AuthProvider = ({ children }) => {
     const jwt = localStorage.getItem('jwt');
     const username = localStorage.getItem('username');
     const userId = localStorage.getItem('userId');
+    const familyId = localStorage.getItem('familyId');
 
     if (jwt && username && userId) {
-      setUser({ jwt, username, userId });
+      setUser({ jwt, username, userId, familyId });
     }
     setLoading(false);
   }, []);

@@ -58,6 +58,11 @@ class FamilyController {
         res.json(result)
     }
 
+    static getInviteInformaiton = async(req,res) => {
+        const result = await FamilyServices.getInviteInformation(req,res)
+        res.json(result)
+    }
+
 
 }
 module.exports = FamilyController

@@ -1,4 +1,9 @@
-first page for creating and accepting in case they have invite
-if they dont only create
+fix create family position when they dont have invite 
 
+fix invite card with proper information from the api  
+fix management and add layout
+make good design for management
+add settings page for the user
+make the search page functional
+start groceries logic
 *****migrations need a fix so we change database.sequalize.sync() method in index.js and we use migrations insted of model db sql creating

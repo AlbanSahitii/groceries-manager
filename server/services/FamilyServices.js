@@ -149,7 +149,7 @@ class FamilyServices {
         } else if (inviteInFamily) {
             return {
                 message:'User has an active invite',
-                family_id: inviteInFamily.family_id
+                family_id: inviteInFamily.family_id,
             }
             
         } else {
@@ -164,6 +164,8 @@ class FamilyServices {
 
     static inviteUserInFamily = async (req,res) => {
         const {email, family_id} = req.body
+        const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours from now
+
         if(!email || !family_id) return 'Information missing'
 
         const userData = await User.findOne({attributes:['id'], where:{email:email}})
@@ -178,7 +180,7 @@ class FamilyServices {
 
 
         try {
-            const result = await FamilyInvites.create({user_id: userId, family_id: family_id})
+            const result = await FamilyInvites.create({user_id: userId, family_id: family_id, expiresAt:expiresAt})
             return 'Family member has been invited'
         } catch (error) {
             return error
@@ -279,6 +281,15 @@ class FamilyServices {
         }
 
         return 'Owner Changed'
+    }
+
+    static getInviteInformation = async(req,res) => {
+        const {userId, familyId} = req.body
+        if(!userId || !familyId) return 'Information missing'
+
+        const invite = await FamilyInvites.findOne({where: {user_id:userId, family_id:familyId}})
+        if(!invite) return "Invite doesnt exist"
+        return invite
     }
 
 }

@@ -38,6 +38,7 @@ const Profile = () => {
     return (
         <>
                     <Navbar/>
+                    <a href='/management'>management</a>
             {
                 (() => {
                     if (userFam === true) {

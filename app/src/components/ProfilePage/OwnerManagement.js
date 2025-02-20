@@ -10,7 +10,6 @@ const OwnerManagement = () => {
     const {user, setUser, updateContext} = useContext(AuthContext)
     const [familyMembers, setFamilyMembers] = useState([])
     const [inviteEmail, setInviteEmail] = useState(null)
-
     useEffect(() => {
         const fetchData = async () => {
     
@@ -104,7 +103,7 @@ const OwnerManagement = () => {
                         <th>actions</th>
                     </tr>
                     {
-                        familyMembers.map((item, index) => (
+                       familyMembers.map((item, index) => (
                             <tr key={index}>
                                 <td > {index + 1} </td>
                                 <td > {item.username} </td>
@@ -122,7 +121,7 @@ const OwnerManagement = () => {
                                     }
                                 </td>
                             </tr>
-                        ))
+                        )) 
                     }
                 </tbody>
             </table>

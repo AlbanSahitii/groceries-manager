@@ -18,5 +18,6 @@ FamilyRouter.post('/accept_invite', FamilyController.acceptInvite)
 FamilyRouter.post('/decline_invite', FamilyController.declineInvite)
 FamilyRouter.post('/remove_family_member', FamilyController.removeFromFamily)
 FamilyRouter.post('/change_owner', FamilyController.changeOwner)
+FamilyRouter.post('/get_invite_information', FamilyController.getInviteInformaiton)
 
 module.exports = FamilyRouter

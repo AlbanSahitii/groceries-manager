@@ -1,7 +1,3 @@
-fix create family position when they dont have invite 
-
-fix invite card with proper information from the api  
-fix management and add layout
 make good design for management
 add settings page for the user
 make the search page functional

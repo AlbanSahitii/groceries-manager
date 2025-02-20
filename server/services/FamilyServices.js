@@ -164,7 +164,7 @@ class FamilyServices {
 
     static inviteUserInFamily = async (req,res) => {
         const {email, family_id} = req.body
-        const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours from now
+        const expiresAt = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000); // 3 days from now
 
         if(!email || !family_id) return 'Information missing'
 
@@ -287,9 +287,35 @@ class FamilyServices {
         const {userId, familyId} = req.body
         if(!userId || !familyId) return 'Information missing'
 
-        const invite = await FamilyInvites.findOne({where: {user_id:userId, family_id:familyId}})
+        const invite = await FamilyInvites.findOne( {
+            where: {
+                user_id:userId,
+                family_id:familyId
+            }, 
+            include:{
+                model:Family, where:{
+                    id:familyId
+                }
+            }
+        })
+        
         if(!invite) return "Invite doesnt exist"
-        return invite
+
+        const now = new Date(); 
+        const future = new Date(invite.expiresAt); 
+      
+        const diffInMs = future - now; 
+        const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24)); // Convert to days
+      
+        
+        const data = {
+            familyName : invite.Family.family_name,
+            expiryDate: diffInDays,
+            createDate: invite.createdAt
+        }
+
+
+        return data
     }
 
 }

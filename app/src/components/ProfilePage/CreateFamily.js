@@ -7,7 +7,6 @@ const CreateFamily = () => {
     const [inputs, setInputs] = useState({})
     const {user, setUser} = useContext(AuthContext)
 
-    console.log(user)
     const handleSubmitWithInvite = async(e)=> {
         e.preventDefault();
     

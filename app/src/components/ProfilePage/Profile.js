@@ -14,7 +14,6 @@ const Profile = () => {
     const [userFam, setUserFam] = useState(null)
     const navigate = useNavigate();
 
-    console.log(user)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,8 +33,6 @@ const Profile = () => {
     }, [])
 
 
-    console.log(user);
-    console.log(userFam);
     return (
         <>
                     <Navbar/>

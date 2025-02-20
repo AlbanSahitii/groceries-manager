@@ -7,21 +7,26 @@ const AcceptFamily = () => {
     const {user, setUser} = useContext(AuthContext)
     const navigate= useNavigate()
     const [familyInvite, setFamilyInvite] = useState(null)
+    const [familyMembers, setFamilyMembers] = useState([])
+    
 
     useEffect(  ()=> {
-        const fetchData= async() => {
+        const fetchData= async () => {
             try {
-                const result = await axios.post('http://localhost:3080/api/family/get_invite_information',
+                const familyInformation = await axios.post('http://localhost:3080/api/family/get_invite_information',
                     {familyId:user.familyId, userId: user.userId}
                 )
-                setFamilyInvite(result.data)
+                setFamilyInvite(familyInformation.data)
+
+                const memberList = await axios.get(`http://localhost:3080/api/family/get_members?family_id=${user.familyId}`)
+                setFamilyMembers(memberList.data)
             } catch (error) {
                 alert(error)
             }
         }
         fetchData()
     }, [0])
-    
+    console.log(familyMembers);
     console.log(familyInvite)
 
     const acceptFamilyInviteSubmit = async (e) => {
@@ -53,25 +58,28 @@ const AcceptFamily = () => {
         }
 
     }
+    
 
     return (
         <>
         {/** the information that is static will display good information from database */}
         <div className='accept-family'>
-            <h1>{`${user.familyId} has invited you`}</h1>
+            <h1>{`${familyInvite?.familyName} has invited you`}</h1>
             <div className='accept-family-card'>
                 <div className='accept-family-card-header'>
                     <img src={FamilyIcon}></img>
                     <div className='accept-family-card-header-information'>
-                        <p className='created-p'>{`created on 2022`}</p>
-                        <p className='family-name'>{`${user.familyId} Family`}</p>
-                        <p className='expire-p'>{`expires in 3days`}</p>
+                        <p className='created-p'>{`created on ${familyInvite?.createDate.slice(0, 4)}`}</p>
+                        <p className='family-name'>{`${familyInvite?.familyName} Family`}</p>
+                        <p className='expire-p'>{`expires in ${familyInvite?.expiryDate} ${familyInvite?.expiryDate === 1 ? "day" : "days"}`}</p>
                     </div>
                 </div>
                 <div className='accept-family-card-body'>
-                    <p ><img src={FamilyIcon}></img>Alban - admin</p>
-                    <p><img src={FamilyIcon}></img>Alban - member</p>
-                    <p ><img src={FamilyIcon}></img>Alban - Member</p>
+                    {
+                        familyMembers.map((item, index) => (
+                            <p key={index}><img src={FamilyIcon}></img>{item.email}</p>
+                        ))
+                    }
                 </div>
                 <div className='accept-family-card-footer'>
                     <button className='accept' onClick={acceptFamilyInviteSubmit}>Accept</button>

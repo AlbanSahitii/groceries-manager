@@ -15,7 +15,6 @@ const ProfilePage = () => {
         const fetchData = async () => {
 
             const response = await axios.get(`http://localhost:3080/api/family/get_members?family_id=${user.familyId}`)
-
             setFamilyMembers(response.data)
         }   
         fetchData()

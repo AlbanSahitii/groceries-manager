@@ -23,31 +23,7 @@ const ProfilePage = () => {
 
     return (
         <>
-        
             ProfilePage
-
-            {
-                (() => {
-                    if (user.userType === 'Owner') {
-                        return (
-                            (   <>
-                                    <div> im an Owner </div>
-                                    
-                                    <button onClick={() => navigate('/management')}>Managment</button>
-                                </>
-                            )
-                        )
-                    } else if (user.userType === "Member") {
-                        return (
-                            (
-                                <div>im a Member</div>
-                            )
-                        )
-                    }
-                })()
-            }
-
-
             <ul>
                 {
                     familyMembers.map((item, index) => (

@@ -34,11 +34,11 @@ const Profile = () => {
     }, [])
 
 
-
+    console.log(user);
+    console.log(userFam);
     return (
         <>
                     <Navbar/>
-                    <a href='/management'>management</a>
             {
                 (() => {
                     if (userFam === true) {
@@ -59,7 +59,14 @@ const Profile = () => {
                         )
                     } else if (userFam === false) {
                         return (
-                            (<CreateFamily/>)
+                            (
+                            <>
+                            <div className='profile-family-container'>
+                                <CreateFamily/>
+                            </div>
+                            </>
+                            
+                            )
                         )
                     }
                 })()

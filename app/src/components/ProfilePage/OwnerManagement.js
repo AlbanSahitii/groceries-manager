@@ -1,10 +1,11 @@
 import { React, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom';
-
+import Navbar from './Navbar'
 import axios from 'axios'
 
-
+import './src/styles/owner-management.css'
+import profileIcon from  './src/img/profile-icon.png'
 const OwnerManagement = () => {
     const navigate = useNavigate()
     const {user, setUser, updateContext} = useContext(AuthContext)
@@ -72,59 +73,56 @@ const OwnerManagement = () => {
         }
     }
 
-
     return (
         <>
-            <button onClick={() => navigate('/login')}>go profile</button>
-
-            Managment
-
-            <form onSubmit={handleSubmit}>
-                <label>Enter family member email:
-                    <input 
-                        type="email" 
-                        name="email"
-                        value = {inviteEmail || ""} 
-                        onChange={handleChange}
-                        required
-                        
-                    />
-                </label>
-                <input type="submit" />
-            </form>
+            <Navbar />
 
 
-            <table>
-                <tbody>
-                    <tr>
-                        <th>#</th>
-                        <th>email</th>
-                        <th>type</th>
-                        <th>actions</th>
-                    </tr>
-                    {
-                       familyMembers.map((item, index) => (
-                            <tr key={index}>
-                                <td > {index + 1} </td>
-                                <td > {item.username} </td>
-                                <td >{item.username === user.username ? "Owner" : "Member"}</td>
-                                <td>
-                                    {
-                                        item.username !== user.username &&
-                                        <button onClick={ () => handleRowDelete(item.username)}>delete</button>
-                                    }
-                                </td>
-                                <td>
-                                    {
-                                        item.username !== user.username &&
-                                        <button onClick={ () => handleOwnerTransfer(item.username)}>Transfer Owner</button>
-                                    }
-                                </td>
-                            </tr>
-                        )) 
-                    }
-                </tbody>
-            </table>
+
+            <div className='owner-management-main-body' >
+                    <form onSubmit={handleSubmit}>
+                        <label>Enter family member email:
+                            <input 
+                                type="email" 
+                                name="email"
+                                value = {inviteEmail || ""} 
+                                onChange={handleChange}
+                                required
+                                
+                            />
+                        </label>
+                        <input type="submit" />
+                    </form>
+
+                    <div className='owner-management-main-body-card-section'>
+                                {
+                                familyMembers.map((item, index) => (
+                                        <div className='owner-management-main-body-card' key={index}>
+                                            <div className='owner-management-main-body-card-left'>
+                                                <img src={profileIcon}></img>
+                                            </div>
+                                            <div className='owner-management-main-body-card-right'>
+                                                <p>Type - {item.username === user.username ? "Owner" : "Member"}</p>
+                                                <p>Username - {item.username} </p>
+                                                <p>Email - {item.email} </p>
+                                                <p>All time groceries added - 999</p>
+                                                <div className='card-right-button-container'>
+                                                    {
+                                                        item.username !== user.username &&
+                                                        <button onClick={ () => handleRowDelete(item.username)}>Remove</button>
+                                                    }
+                                                    {
+                                                        item.username !== user.username &&
+                                                        <button onClick={ () => handleOwnerTransfer(item.username)}>Transfer Ownership</button>
+                                                    }
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    )) 
+                                }
+                    </div>
+            </div>
         </>
     )
 }

@@ -15,7 +15,7 @@ const Navbar = () => {
             <nav className='auth-navbar'>
                 <img src={CarrotLogo}></img>
                 <ul>
-                    <a><li>Settings</li></a>
+                    <a href='/profile'><li>Profile</li></a>
                     <a href='/search'><li>Search</li></a>
                     <a href='/groceries'><li>Groceries</li></a>
                     {

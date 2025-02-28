@@ -7,6 +7,8 @@ import Profile from "./components/ProfilePage/Profile.js";
 import OwnerManagement from "./components/ProfilePage/OwnerManagement.js";
 import SearchPage from "./components/GroceriesPage/SearchPage.js";
 import Groceries from "./components/GroceriesPage/Groceries.js";
+import Settings from "./components/ProfilePage/Settings.js";
+
 
 import AuthLayout from "./layouts/AuthLayout.js";
 import GuestLayout from "./layouts/GuestLayout.js";
@@ -29,6 +31,7 @@ const App = () => {
           
           <Route path="/profile" element={<Profile />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/groceries" element={<Groceries />} />
           
         </Route>

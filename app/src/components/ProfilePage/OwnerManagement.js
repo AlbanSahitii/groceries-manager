@@ -80,19 +80,22 @@ const OwnerManagement = () => {
 
 
             <div className='owner-management-main-body' >
+                <div className='owner-management-invite'>
                     <form onSubmit={handleSubmit}>
-                        <label>Enter family member email:
+                        <label>Enter family member email 
                             <input 
                                 type="email" 
                                 name="email"
                                 value = {inviteEmail || ""} 
                                 onChange={handleChange}
+                                className='owner-management-invite-input'
                                 required
                                 
                             />
                         </label>
-                        <input type="submit" />
+                        <input className='owner-management-invite-submit' type="submit" />
                     </form>
+                </div>
 
                     <div className='owner-management-main-body-card-section'>
                                 {

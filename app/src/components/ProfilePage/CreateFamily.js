@@ -9,6 +9,7 @@ const CreateFamily = () => {
 
     const handleSubmitWithInvite = async(e)=> {
         e.preventDefault();
+
     
         try {
             const deleteInvite = await axios.post(`http://localhost:3080/api/family/decline_invite`, 
@@ -33,6 +34,8 @@ const CreateFamily = () => {
         try {
             const response = await axios.post(`http://localhost:3080/api/family/create`, 
                 {family_name: inputs.familyName, user_id: user.userId})
+                localStorage.setItem("userType", "Owner")
+                setUser({...user, userType: 'Owner'})
             alert(response.data)
             window.location.reload();
             

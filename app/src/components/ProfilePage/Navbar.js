@@ -16,6 +16,7 @@ const Navbar = () => {
                 <img src={CarrotLogo}></img>
                 <ul>
                     <a href='/profile'><li>Profile</li></a>
+                    <a href='/settings'><li>Settings</li></a>
                     <a href='/search'><li>Search</li></a>
                     <a href='/groceries'><li>Groceries</li></a>
                     {

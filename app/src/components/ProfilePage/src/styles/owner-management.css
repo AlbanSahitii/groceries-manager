@@ -63,3 +63,16 @@
     margin: 2px;
 
 }
+
+
+.owner-management-invite-input{
+    border:  none;
+
+}
+
+
+.owner-management-invite > input {
+    border: none;
+    background-color: #578E7E;
+    color: white;
+}

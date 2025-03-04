@@ -87,9 +87,6 @@ class UserService {
         return 'update user'
     }
 
-
-
-    
     static getUserType = async(userId) => {
 
         const getUser = await User.findOne({where: {id: userId}})

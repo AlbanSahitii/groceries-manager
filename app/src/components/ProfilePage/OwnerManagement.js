@@ -1,25 +1,23 @@
 import { React, useContext, useEffect, useState } from 'react'
+import { useQuery, useMutation, useQueryClient } from "react-query";
+
 import { AuthContext } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar'
 import axios from 'axios'
 
+import { addFamilyMember, deleteFamilyMember, fetchFamilies, transferOwnerFamily } from '../../api/family';
 import './src/styles/owner-management.css'
 import profileIcon from  './src/img/profile-icon.png'
+
 const OwnerManagement = () => {
     const navigate = useNavigate()
+    const queryClient = useQueryClient();
     const {user, setUser, updateContext} = useContext(AuthContext)
-    const [familyMembers, setFamilyMembers] = useState([])
     const [inviteEmail, setInviteEmail] = useState(null)
-    useEffect(() => {
-        const fetchData = async () => {
     
-            const response = await axios.get(`http://localhost:3080/api/family/get_members?family_id=${user.familyId}`)
-    
-            setFamilyMembers(response.data)
-        }   
-        fetchData()
-    }, [])
+    const {data: familyMembers} = useQuery("familyMembers", ()=> fetchFamilies(user.familyId))
+
 
 
     const handleChange = (e) => {
@@ -30,48 +28,38 @@ const OwnerManagement = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        try {
-            const response = await axios.post(`http://localhost:3080/api/family/add_family_member`, 
-                {family_id: user.familyId, email: inviteEmail})
-
-            alert(response.data)
-                    
-        } catch (error) {
-            console.log(error)            
-        }
+        addMemberMutation.mutate({family_id: user.familyId, email: inviteEmail})
     }
 
-    const handleRowDelete = async (username) => {
-        try {
-            const response = await axios.post('http://localhost:3080/api/family/remove_family_member', 
-                {username: username}
-            )
+    const addMemberMutation = useMutation({
+        mutationFn: addFamilyMember,
+        onSuccess: () => {
+            setInviteEmail("")
+        },
+        onError: (e)=> console.log(e)
+    })
 
-            setFamilyMembers(familyMembers.filter((item) => {
-                return item.username !== username
-            }))
-
-
-            alert(response.data)
-        } catch (error) {
-            console.log(error)
+    const deleteMemberMutation = useMutation({
+        mutationFn: deleteFamilyMember,
+        onSuccess: ()=> {
+            alert('deleted succesfully')
+            queryClient.invalidateQueries(['familyMembers'])
+        },
+        onError: (error)=> {
+            alert(error)
         }
-    }
-
-
-    const handleOwnerTransfer = async (newOwnerUsername) => {
-        try {
-            const response = await axios.post('http://localhost:3080/api/family/change_owner',
-                {ownerUsername: user.username, newOwnerUsername: newOwnerUsername}
-            )
+    })
+    
+    const transferOwnerMutaiton = useMutation({
+        mutationFn: transferOwnerFamily,
+        onSuccess: ()=> {
+            queryClient.invalidateQueries(['familyMembers'])
             localStorage.setItem('userType', "Member")
-            alert(response.data)
             window.location.reload();
-        } catch (error) {
-            console.log(error)
-        }
-    }
+
+        },
+        onError: (e)=> console.log(e)
+    })
 
     return (
         <>
@@ -99,7 +87,7 @@ const OwnerManagement = () => {
 
                     <div className='owner-management-main-body-card-section'>
                                 {
-                                familyMembers.map((item, index) => (
+                                familyMembers?.map((item, index) => (
                                         <div className='owner-management-main-body-card' key={index}>
                                             <div className='owner-management-main-body-card-left'>
                                                 <img src={profileIcon}></img>
@@ -112,11 +100,11 @@ const OwnerManagement = () => {
                                                 <div className='card-right-button-container'>
                                                     {
                                                         item.username !== user.username &&
-                                                        <button onClick={ () => handleRowDelete(item.username)}>Remove</button>
+                                                        <button onClick={() => deleteMemberMutation.mutate(item.username)}>Remove</button>
                                                     }
                                                     {
                                                         item.username !== user.username &&
-                                                        <button onClick={ () => handleOwnerTransfer(item.username)}>Transfer Ownership</button>
+                                                        <button onClick={() => transferOwnerMutaiton.mutate({ownerUsername:user.username, newOwnerUsername:item.username})}>Transfer Ownership</button>
                                                     }
                                                 </div>
 

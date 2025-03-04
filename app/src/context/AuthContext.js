@@ -15,8 +15,14 @@ export const AuthProvider = ({ children }) => {
     const userId = localStorage.getItem('userId');
     const familyId = localStorage.getItem('familyId');
     const userType = localStorage.getItem('userType')
-
+   
+    
     if (jwt && username && userId) {
+      const fetchData = async () => {
+        await checkUser({username:username, jwtToken: jwt})
+      }
+  
+      fetchData()
       setUser({ jwt, username, userId, familyId, userType });
     }
     setLoading(false);
@@ -31,7 +37,6 @@ export const AuthProvider = ({ children }) => {
   }
 
   const logout = () => {
-
     setUser(null)
     localStorage.removeItem('jwt')
     localStorage.removeItem('username')
@@ -59,21 +64,19 @@ export const AuthProvider = ({ children }) => {
   }
 
   const checkUser = async (data) => {
-    console.log(data);
+    setLoading(true)
       try {
         await axios.post('http://localhost:3080/api/user/validateUser', data)
         .then(response => { 
-          if(response.data === "User doesnt exist" || response.data === "Information missing" || response.data === "Information is invalid"){
-            setUser(null)
-            localStorage.clear()
-            alert('deleted succesfully')
-            navigate('/login') 
+          if(response.data === "User doesnt exist" || response.data === "Information missing" || response.data === "Invalid JWT token"){
+            logout()
           }
         })
 
     } catch (error) {
         console.log(error)
     }
+    setLoading(false)
 
   }
 

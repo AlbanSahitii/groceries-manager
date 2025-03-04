@@ -252,7 +252,7 @@ class FamilyServices {
 
     static ownerChange = async (req,res) => {
         const {ownerUsername, newOwnerUsername} = req.body
-
+        console.log(req.body)
 
         const users = await User.findAll(
             {

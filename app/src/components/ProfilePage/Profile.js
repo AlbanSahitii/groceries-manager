@@ -29,12 +29,13 @@ const Profile = () => {
         }
         if (userInformation) {
             const newStatus =
-                userInformation.message === "User doesn`t have an family" ? false :
-                userInformation.message === "User has an active invite" ? 'Invited' :
-                true;
-    
-            if (newStatus !== userFam) {
-                setUserFam(newStatus);
+                userInformation.message === "User doesn`t have an family" ? false : userInformation.message === "User has an active invite" ? 'Invited' : true;
+            if(userInformation.message === "User doesn`t have an family") {
+                setUserFam(false)
+            } else if(userInformation.message === "User has an active invite"){
+                setUserFam("Invited")
+            } else {
+                setUserFam(true)
             }
         }
     }, [userInformation, user.familyId]);

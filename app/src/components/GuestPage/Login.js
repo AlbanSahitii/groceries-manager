@@ -23,7 +23,6 @@ const Login = () =>{
         setInputs(values => ({...values, [name]: value}))
     }
 
-    console.log(inputs)
 
     return (
         <>

@@ -1,8 +1,11 @@
 import { React, useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios'
-import carrotLogo from './src/img/carrot-icon.png'
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import { AuthContext } from '../../context/AuthContext'
+import { createFamily, familyInviteAccept } from '../../api/family'
 
+
+import carrotLogo from './src/img/carrot-icon.png'
 const CreateFamily = () => {
     const [inputs, setInputs] = useState({})
     const {user, setUser} = useContext(AuthContext)
@@ -10,39 +13,38 @@ const CreateFamily = () => {
     const handleSubmitWithInvite = async(e)=> {
         e.preventDefault();
 
-    
-        try {
-            const deleteInvite = await axios.post(`http://localhost:3080/api/family/decline_invite`, 
-                {family_id: user.familyId, user_id: user.userId})
-            
-            const createFamily = await axios.post(`http://localhost:3080/api/family/create`, 
-                {family_name: inputs.familyName, user_id: user.userId})
-            
-            window.location.reload();
+        const response = familyInviteAccewptMutaiton.mutate({
+            family_name: inputs.familyName,
+            family_id: user.familyId,
+            user_id: user.userId
+        })    
+        window.location.reload();
 
-        } catch (error) {
-            console.log(error)
-        }
     }
 
-
+    const familyInviteAccewptMutaiton = useMutation({
+        mutationFn: familyInviteAccept,
+        onError: (e)=> console.log(e),
+        onSuccess: (e) => console.log(e)
+    })
 
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         
-        try {
-            const response = await axios.post(`http://localhost:3080/api/family/create`, 
-                {family_name: inputs.familyName, user_id: user.userId})
-                localStorage.setItem("userType", "Owner")
-                setUser({...user, userType: 'Owner'})
-            alert(response.data)
-            window.location.reload();
-            
-        } catch (error) {
-            console.log(error)            
-        }
+        const response = createFamilyMutation.mutate({family_name: inputs.familyName, user_id: user.userId})
+
+        localStorage.setItem("userType", "Owner")
+        setUser({...user, userType: 'Owner'})
+        
+        window.location.reload();
     }
+
+    const createFamilyMutation = useMutation({
+        mutationFn: createFamily,
+        onSuccess: (e)=> console.log(e),
+        onError: (e) => console.log(e)
+    })
     
 
     const handleChange = (e) => {
@@ -51,8 +53,6 @@ const CreateFamily = () => {
         const name = e.target.name
         setInputs(values => ({...values, [name]: value}))
     }
-
-
 
     return (
         <>

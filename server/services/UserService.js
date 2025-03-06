@@ -79,7 +79,21 @@ class UserService {
   };
 
   static getUser = async (req, res) => {
-    // todo
+    const {id} = req.query;
+    if (!id) return "information missing";
+    try {
+      const user = await User.findOne({where: {id: id}});
+      if (user)
+        return {
+          user_id: user.id,
+          username: user.username,
+          email: user.email,
+          isVerified: user.isVerified,
+          fullName: user.full_name,
+        };
+    } catch (error) {
+      return error.message;
+    }
   };
 
   static updateUser = async (req, res) => {

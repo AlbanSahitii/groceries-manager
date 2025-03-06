@@ -1,0 +1,57 @@
+.settings-body-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  width: 100%;
+}
+
+.settings-body {
+  background-color: #578e7e;
+  width: 50%;
+  height: 70%;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+.settings-header-images {
+  margin-bottom: 1%;
+}
+.settings-header {
+  margin-bottom: 5%;
+}
+
+.settings-header-images {
+  position: relative;
+  width: 99.99%;
+  height: auto;
+}
+
+.settings-header-images > img:first-child {
+  width: 100%;
+  object-fit: fill;
+}
+
+.settings-header-images > img:nth-child(2) {
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  transform: translateX(-50%) translateY(40%);
+  max-width: 50%;
+}
+
+.settings-header-data {
+  margin: 2% 2% 2% 22%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}

@@ -75,7 +75,7 @@ export const getFamilyMembers = async family_id => {
   return memberList.data;
 };
 
-export const getFamilyInformation = async data => {
+export const getFamilyInviteInformation = async data => {
   const {familyId, userId} = data;
   const familyInformation = await axios.post(
     "http://localhost:3080/api/family/get_invite_information",
@@ -104,4 +104,11 @@ export const declineFamilyInvite = async data => {
   );
 
   return response;
+};
+
+export const fetchFamilyInformation = async family_id => {
+  const response = await axios.get(
+    `http://localhost:3080/api/family/get?family_id=${family_id}`
+  );
+  return response.data;
 };

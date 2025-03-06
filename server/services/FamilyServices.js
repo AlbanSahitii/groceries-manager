@@ -38,8 +38,11 @@ class FamilyServices {
 
   static getFamily = async (req, res) => {
     const {family_id} = req.query;
+    if (!family_id) return "information missing";
 
     const family = await Family.findOne({where: {id: family_id}});
+    if (!family) return "Family doesnt exist";
+
     return family;
   };
 

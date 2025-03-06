@@ -5,7 +5,7 @@ import FamilyIcon from "./src/img/profile-icon.png";
 import {
   acceptFamilyWithInvite,
   declineFamilyInvite,
-  getFamilyInformation,
+  getFamilyInviteInformation,
   getFamilyMembers,
 } from "../../api/family";
 
@@ -19,7 +19,7 @@ const AcceptFamily = () => {
     getFamilyMembers(user.familyId)
   );
   const {data: familyInformation} = useQuery("familyInformation", () =>
-    getFamilyInformation({familyId: user.familyId, userId: user.userId})
+    getFamilyInviteInformation({familyId: user.familyId, userId: user.userId})
   );
 
   const acceptFamilyInviteSubmit = e => {

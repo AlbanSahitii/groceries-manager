@@ -1,55 +1,54 @@
-.create-family, .accept-family {
-    width: 30%;
-    height: 20%;
-    background-color: #3D3D3D;
-    padding: 10px 15px 10px 15px;
-    color:  white;
-    border-radius: 30px;
-
+.create-family,
+.accept-family {
+  width: 30%;
+  height: 20%;
+  background-color: #3d3d3d;
+  padding: 10px 15px 10px 15px;
+  color: white;
+  border-radius: 30px;
 }
 
 .create-family > form > input:first-child {
-    width: 80%;
-    background-color: inherit; 
-    border: none;
-    border-bottom: 1px solid #ccc; 
-    outline: none;
-    color: white;
-    font-size: 16px;
-    padding: 5px 0;
-    transition: border-color 0.3s;
-  }
-  
-  .create-family > form > input:first-child::placeholder {
-    color: #ccc; 
-    font-size: 14px;
-  }
-  
-  .create-family > form > input:first-child:focus {
-    border-bottom: 1px solid #fff;
-  }
-  
-.create-family>form>input {
-    margin: 20px;
+  width: 80%;
+  background-color: inherit;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+  color: white;
+  font-size: 16px;
+  padding: 5px 0;
+  transition: border-color 0.3s;
+}
+
+.create-family > form > input:first-child::placeholder {
+  color: #ccc;
+  font-size: 14px;
+}
+
+.create-family > form > input:first-child:focus {
+  border-bottom: 1px solid #fff;
+}
+
+.create-family > form > input {
+  margin: 20px;
 }
 
 .profile-family-container {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .accept-family-card-body > p > img {
   width: 18px;
   height: auto;
 }
-.accept-family-card-header{
+.accept-family-card-header {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-evenly;
   align-items: center;
   align-content: flex-start;
-
 }
 
 .accept-family-card-header > img {
@@ -61,23 +60,21 @@
   display: inline;
 }
 
-.accept-family-card-header-header{
+.accept-family-card-header-header {
   display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	align-items: center;
-	align-content: flex-start;
-
-
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: flex-start;
 }
-.accept-family > h1{
+.accept-family > h1 {
   text-align: center;
 }
 .accept-family-card-header-information {
   width: 80%;
 }
-.created-p{
+.created-p {
   display: block;
   opacity: 0.6;
   font-size: 12px;
@@ -89,34 +86,32 @@
   display: inline;
 }
 
-.family-name{
+.family-name {
   display: inline;
   margin-right: 20px;
 }
 
-.accept-family-card{
-  background-color: #578E7E;
+.accept-family-card {
+  background-color: #578e7e;
   border-radius: 20px 20px 30px 30px;
   padding: 20px;
 }
 
 .accept-family-card-footer > button {
-  background-color: #FFFAEC; 
-  color: white; 
-  border: none; 
+  background-color: #fffaec;
+  color: white;
+  border: none;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
   border-radius: 35px;
-
 }
-  
-.accept-family-card-footer > button:hover {
-  background-color: rgb(215, 237, 231); 
 
+.accept-family-card-footer > button:hover {
+  background-color: rgb(215, 237, 231);
 }
 .accept-family-card-footer > .accept {
-  color:black
+  color: black;
 }
 
 .accept-family-card-footer > .decline {
@@ -125,19 +120,17 @@
 }
 
 .create-family > form > input[type="submit"] {
-  background-color: #578E7E; 
-  color: white; 
-  border: none; 
+  background-color: #578e7e;
+  color: white;
+  border: none;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
   border-radius: 35px;
-
 }
-  
-.create-family > form > input[type="submit"]:hover {
-  background-color: #49b496; 
 
+.create-family > form > input[type="submit"]:hover {
+  background-color: #49b496;
 }
 
 .create-family > h1 {
@@ -145,10 +138,9 @@
 }
 
 body {
-
-  background: url('../../../src/img/background-fruits.png') no-repeat center center fixed;
+  background: url("../../../src/img/background-fruits.png") no-repeat center
+    center fixed;
   background-size: cover;
   background-position: center;
   height: 100vh;
-
 }

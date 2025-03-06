@@ -1,39 +1,35 @@
-const jwt = require('jsonwebtoken')
-const secretKey = process.env.JWT_KEY
+const jwt = require("jsonwebtoken");
+const secretKey = process.env.JWT_KEY;
 
 class JwtService {
-
-    static generateJwt = (payload) => {
-        /*
+  static generateJwt = payload => {
+    /*
         payload needs to receive 
         {
         useername: username
         password : password
         }
         */
-        try {
-            const token = jwt.sign(payload, secretKey, {
-                expiresIn: "1d"
-            });
-            return token;
-    
-        } catch (error) {
-            return error
-        }
+    try {
+      const token = jwt.sign(payload, secretKey, {
+        expiresIn: "1d",
+      });
+      return token;
+    } catch (error) {
+      return error;
     }
+  };
 
-    static verifyJwt = (token) => {
+  static verifyJwt = token => {
+    try {
+      const decoded = jwt.verify(token, secretKey);
 
-        try {
-            const decoded = jwt.verify(token, secretKey);
-      
-            return decoded;
-            
-          } catch (err) {
-            console.error('JWT verification failed:', err.message);
-            return null;
-          }
+      return decoded;
+    } catch (err) {
+      console.error("JWT verification failed:", err.message);
+      return null;
     }
+  };
 }
 
-module.exports = JwtService
+module.exports = JwtService;

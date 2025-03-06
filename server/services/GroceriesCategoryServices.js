@@ -1,34 +1,28 @@
-const {GroceriesCategory} = require('../models')
+const {GroceriesCategory} = require("../models");
 
 class GroceriesCategoryServices {
+  static getGrocerieCategory = async (req, res) => {
+    //todo
+    return "Category";
+  };
 
-    static getGrocerieCategory = async (req,res) => {
-        //todo
-        return 'Category'
-    }
+  static createGrocerieCategory = async (req, res) => {
+    //todo
 
-    static createGrocerieCategory = async (req,res) => {
-        //todo
+    return "creategrocerieCategory";
+  };
 
+  static updateGrocerieCategory = async (req, res) => {
+    //todo
 
-        return 'creategrocerieCategory'
-    }
+    return "updategrocerieCategory";
+  };
 
-    static updateGrocerieCategory = async (req,res) => {
+  static deleteGrocerieCategory = async (req, res) => {
+    //todo
 
-                //todo
-
-        return 'updategrocerieCategory'
-    } 
-
-    static deleteGrocerieCategory = async (req,res) => {
-                //todo
-
-        return 'deletegrocerieCategory'
-    }
-
-
-
+    return "deletegrocerieCategory";
+  };
 }
 
-module.exports = GroceriesCategoryServices
+module.exports = GroceriesCategoryServices;

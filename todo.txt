@@ -1,4 +1,6 @@
-create and accept family useQuery
+login register useQuery
+groceries useQuery
+
 
 make the profile page good that will be like settings for the user
 make the search page functional

@@ -32,7 +32,8 @@ const Settings = () => {
 
         setIsEditing(!isEditing)
     }
-    console.log(data.email)
+
+    
     const handleChange = (e) => {
         e.preventDefault()
         const value = e.target.value

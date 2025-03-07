@@ -15,6 +15,8 @@ const groceriesCategoryRouter = require("./routes/GroceriesCategoryRouter.js");
 const userFavoritesRouter = require("./routes/UserFavoritesRouter.js");
 const familyGrocerier = require("./routes/FamilyGroceriesRouter.js");
 const purchasedGroceries = require("./routes/PurchasedGroceriesRouter.js");
+const testRouter = require("./routes/TestRouter.js");
+const Middleware = require("./middleware/Middleware.js");
 
 app.use("/api/user", userRouter);
 app.use("/api/family", familyRouter);
@@ -23,9 +25,9 @@ app.use("/api/groceries_category", groceriesCategoryRouter);
 app.use("/api/user_favorites", userFavoritesRouter);
 app.use("/api/family_groceries", familyGrocerier);
 app.use("/api/purchased_groceries", purchasedGroceries);
+app.use("/test", Middleware.errorHandler, testRouter);
 
 const db = require("./models");
-const FamilyGroceriesRouter = require("./routes/FamilyGroceriesRouter.js");
 
 // Start the server
 db.sequelize.sync(/*{ alter: true }*/).then(req => {

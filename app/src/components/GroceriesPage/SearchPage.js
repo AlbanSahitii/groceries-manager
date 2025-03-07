@@ -1,7 +1,7 @@
 import {useContext, useState} from "react";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
-
+import Navbar from "../ProfilePage/Navbar";
 const SearchPage = () => {
   const [searchGrocerie, setSearchGrocerie] = useState("");
   const [groceries, setGroceries] = useState([]);
@@ -47,6 +47,8 @@ const SearchPage = () => {
 
   return (
     <>
+      <Navbar />
+
       <form onSubmit={handleSubmit}>
         <label>
           enter your grocerie

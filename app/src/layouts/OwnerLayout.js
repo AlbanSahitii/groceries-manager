@@ -10,7 +10,7 @@ const OwnerLayout = () => {
     return <Spinner />;
   }
 
-  return user.userType === "Owner" ? <Outlet /> : <Navigate to="/profile" />;
+  return user.userType === "Owner" ? <Outlet /> : <Navigate to="/mainpage" />;
 };
 
 export default OwnerLayout;

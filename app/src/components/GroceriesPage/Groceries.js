@@ -1,7 +1,7 @@
 import {React, useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
-
+import Navbar from "../ProfilePage/Navbar";
 const Groceries = () => {
   const {user} = useContext(AuthContext);
   const [groceries, setGroceries] = useState([]);
@@ -31,6 +31,7 @@ const Groceries = () => {
   console.log(groceries);
   return (
     <>
+      <Navbar />
       <table>
         <tr>
           <td>name</td>

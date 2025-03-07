@@ -10,6 +10,7 @@ import AuthLayout from "./layouts/AuthLayout.js";
 import GuestLayout from "./layouts/GuestLayout.js";
 import OwnerLayout from "./layouts/OwnerLayout.js";
 import Spinner from "./components/Spinner.js";
+import NotFound from "./components/NotFound.js";
 
 const LoginPage = lazy(() => import("./components/GuestPage/Login.js"));
 const RegisterPage = lazy(() => import("./components/GuestPage/Register.js"));
@@ -25,6 +26,7 @@ const App = () => {
     <>
       <Suspense fallback={<Spinner />}>
         <Routes>
+          <Route path="*" element={<NotFound />} />
           <Route element={<GuestLayout />}>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
@@ -36,7 +38,7 @@ const App = () => {
               <Route path="/management" element={<OwnerManagement />} />
             </Route>
 
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/mainpage" element={<Profile />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/groceries" element={<Groceries />} />

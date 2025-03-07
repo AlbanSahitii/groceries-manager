@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {useQuery, useMutation, useQueryClient} from "react-query";
 import {fetchFamilies} from "../../api/family";
 
-const ProfilePage = () => {
+const MainPage = () => {
   const {user, setUser} = useContext(AuthContext);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -14,7 +14,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      ProfilePage
+      MainPage
       <ul>
         {familyMembers?.map((item, index) => (
           <li key={index}> {item.email} </li>
@@ -24,4 +24,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default MainPage;

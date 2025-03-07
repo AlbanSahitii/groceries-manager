@@ -5,18 +5,16 @@ class JwtService {
   static generateJwt = payload => {
     /*
         payload needs to receive 
-        {
-        useername: username
-        password : password
-        }
+        something other than it is, DEFINETLY NOT USERNAME PASSWORD
+      
         */
     try {
       const token = jwt.sign(payload, secretKey, {
-        expiresIn: "1d",
+        expiresIn: "1m",
       });
       return token;
     } catch (error) {
-      return error;
+      throw new Error(error);
     }
   };
 
@@ -26,8 +24,7 @@ class JwtService {
 
       return decoded;
     } catch (err) {
-      console.error("JWT verification failed:", err.message);
-      return null;
+      throw new Error(err.message);
     }
   };
 }

@@ -12,36 +12,31 @@ class FamilyServices {
     // userID is the owner ID !!
     const {family_name, user_id} = req.body;
 
-    if (!family_name || !user_id) return "information missing";
-
     const findUser = await User.findOne({where: {id: user_id}});
-    if (!findUser) return "User doesnt exits";
+    if (!findUser) throw new Error("User doesnt exits");
 
     const familyOwner = await Family.findOne({where: {owner_id: user_id}});
-    if (familyOwner) return "You are owner of an family.";
+    if (familyOwner) throw new Error("You are owner of an family.");
 
     const userInFamily = await FamilyUser.findOne({where: {user_id: user_id}});
-    if (userInFamily) return "You already belong in a family";
+    if (userInFamily) throw new Error("You already belong in a family");
 
-    try {
-      const family = await Family.create({
-        family_name: family_name,
-        owner_id: user_id,
-      });
-      await FamilyUser.create({family_id: family.id, user_id: user_id});
-    } catch (error) {
-      return error.message;
-    }
+    // todo
+    // use transaction
+    const family = await Family.create({
+      family_name: family_name,
+      owner_id: user_id,
+    });
+    await FamilyUser.create({family_id: family.id, user_id: user_id});
 
     return "family created";
   };
 
   static getFamily = async (req, res) => {
     const {family_id} = req.query;
-    if (!family_id) return "information missing";
 
     const family = await Family.findOne({where: {id: family_id}});
-    if (!family) return "Family doesnt exist";
+    if (!family) throw new Error("Family doesnt exist");
 
     return family;
   };
@@ -52,50 +47,36 @@ class FamilyServices {
     const family = await Family.findOne({where: {id: family_id}});
 
     if (!family) {
-      return "family not found";
+      throw new Error("family not found");
     }
 
     if (family.id === family_id && family.family_name === family_name) {
-      return "Cannot update same information";
+      throw new Error("Cannot update same information");
     }
 
-    try {
-      const result = await Family.update(
-        {family_name: family_name},
-        {where: {id: family_id}}
-      );
-
-      return "Information updated";
-    } catch (error) {
-      return error;
-    }
+    const result = await Family.update(
+      {family_name: family_name},
+      {where: {id: family_id}}
+    );
   };
 
   static deleteFamily = async (req, res) => {
     const {family_id} = req.body;
 
-    try {
-      const family = await Family.destroy({where: {id: family_id}});
+    const family = await Family.destroy({where: {id: family_id}});
 
-      if (!family) {
-        return "family not found";
-      }
+    if (!family) throw new Error("family not found");
 
-      return `family - ${family_id} deleted succesfully`;
-    } catch (error) {
-      return error;
-    }
+    return `family - ${family_id} deleted succesfully`;
   };
 
   static addUserInFamily = async (req, res) => {
     // this api wont be used. invite logic below will
     const {family_id, user_id} = req.body;
 
-    if (!family_id || !user_id) return "information missing";
-
     const userInFamily = await FamilyUser.findOne({where: {user_id: user_id}});
 
-    if (userInFamily) return "user already belongs in a family";
+    if (userInFamily) throw new Error("user already belongs in a family");
 
     const insertUser = await FamilyUser.create({
       family_id: family_id,
@@ -107,7 +88,6 @@ class FamilyServices {
 
   static getFamilyMembers = async (req, res) => {
     const {family_id} = req.query;
-    if (!family_id) return "Information missing";
 
     const familyMembers = await FamilyUser.findAll({
       attributes: ["user_id"],
@@ -117,7 +97,7 @@ class FamilyServices {
     });
 
     if (familyMembers.length < 1 || familyMembers === undefined)
-      return "Family doesnt exist";
+      throw new Error("Family doesnt exist");
 
     const ids = familyMembers.map(row => row.user_id);
 
@@ -128,18 +108,12 @@ class FamilyServices {
       },
     });
 
-    try {
-      const result = await Promise.all(users);
-      return result;
-    } catch (error) {
-      return error;
-    }
+    const result = await Promise.all(users);
+    return result;
   };
 
   static isUserInFamily = async (req, res) => {
     const {user_id} = req.query;
-
-    if (!user_id) return "Information missing";
 
     const userFamily = await FamilyUser.findOne({where: {user_id: user_id}});
     const inviteInFamily = await FamilyInvites.findOne({
@@ -167,70 +141,56 @@ class FamilyServices {
     const {email, family_id} = req.body;
     const expiresAt = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000); // 3 days from now
 
-    if (!email || !family_id) return "Information missing";
-
     const userData = await User.findOne({
       attributes: ["id"],
       where: {email: email},
     });
-    if (!userData) return "user doesnt exist";
+    if (!userData) throw new Error("user doesnt exist");
     const userId = userData.id;
 
     const checkInvites = await FamilyInvites.findOne({
       where: {user_id: userId},
     });
-    if (checkInvites) return "User has an pending family invite";
+    if (checkInvites) throw new Error("User has an pending family invite");
 
     const checkFamily = await FamilyUser.findOne({where: {user_id: userId}});
-    if (checkFamily) return "User is already in a family";
+    if (checkFamily) throw new Error("User is already in a family");
 
-    try {
-      const result = await FamilyInvites.create({
-        user_id: userId,
-        family_id: family_id,
-        expiresAt: expiresAt,
-      });
-      return "Family member has been invited";
-    } catch (error) {
-      return error;
-    }
+    const result = await FamilyInvites.create({
+      user_id: userId,
+      family_id: family_id,
+      expiresAt: expiresAt,
+    });
+    return "Family member has been invited";
   };
 
   static acceptFamilyInvite = async (req, res) => {
     const {user_id, family_id} = req.body;
 
-    if (!user_id || !family_id) return "Information missing";
-
     const invite = await FamilyInvites.findOne({where: {user_id: user_id}});
-    if (!invite) return "Invite doesnt exist";
+    if (!invite) throw new Error("Invite doesnt exist");
 
-    try {
-      await sequelize.transaction(async transaction => {
-        await Promise.all([
-          FamilyInvites.destroy({where: {user_id: user_id}, transaction}),
-          FamilyUser.create(
-            {user_id: user_id, family_id: family_id},
-            {transaction}
-          ),
-        ]);
-      });
+    await sequelize.transaction(async transaction => {
+      await Promise.all([
+        FamilyInvites.destroy({where: {user_id: user_id}, transaction}),
+        FamilyUser.create(
+          {user_id: user_id, family_id: family_id},
+          {transaction}
+        ),
+      ]);
+    });
 
-      return "Invite Accepted";
-    } catch (error) {
-      return error;
-    }
+    return "Invite Accepted";
   };
 
   static declineFamilyInvite = async (req, res) => {
     const {user_id, family_id} = req.body;
 
-    if (!user_id || !family_id) return "Missing information";
-
     const invite = await FamilyInvites.findOne({
       where: {user_id: user_id, family_id: family_id},
     });
 
-    if (!invite) return "Invite not found";
+    if (!invite) throw new Error("Invite not found");
 
     const deleteInvite = await FamilyInvites.destroy({where: {id: invite.id}});
 
@@ -239,31 +199,29 @@ class FamilyServices {
 
   static removeMemberFromFamily = async (req, res) => {
     const {username} = req.body;
-    if (!username) return "Information missing";
 
     const result = await User.findOne({
       where: {username: username},
       include: [{model: FamilyUser}],
     });
 
-    if (!result) return "Cant find user";
-    if (!result.FamilyUser) return "User doesnt belong in any family";
+    if (!result) throw new Error("Cant find user");
+    if (!result.FamilyUser) throw new Error("User doesnt belong in any family");
 
     const isOwner = await Family.findOne({where: {owner_id: result.id}});
 
-    if (isOwner) return "Cant delete family owner";
+    if (isOwner) throw new Error("Cant delete family owner");
 
     const deleteMember = await FamilyUser.destroy({
       where: {id: result.FamilyUser.id},
     });
-    if (!deleteMember) return "Cant find Family member";
+    if (!deleteMember) throw new Error("Cant find Family member");
 
     return "Member deleted";
   };
 
   static ownerChange = async (req, res) => {
     const {ownerUsername, newOwnerUsername} = req.body;
-    console.log(req.body);
 
     const users = await User.findAll({
       where: {
@@ -273,7 +231,7 @@ class FamilyServices {
       },
     });
 
-    if (users.length < 2) return "One of users doesnt exist";
+    if (users.length < 2) throw new Error("One of users doesnt exist");
 
     const ownerId = users.filter(user => user.username === ownerUsername)[0].id;
     const newOwnerId = users.filter(
@@ -281,23 +239,17 @@ class FamilyServices {
     )[0].id;
 
     const family = await Family.findOne({where: {owner_id: ownerId}});
-    if (!family) return "Family not found";
+    if (!family) throw new Error("Family not found");
 
-    try {
-      const newOwner = await Family.update(
-        {owner_id: newOwnerId},
-        {where: {owner_id: ownerId}}
-      );
-    } catch (error) {
-      return error.message;
-    }
-
+    const newOwner = await Family.update(
+      {owner_id: newOwnerId},
+      {where: {owner_id: ownerId}}
+    );
     return "Owner Changed";
   };
 
   static getInviteInformation = async (req, res) => {
     const {userId, familyId} = req.body;
-    if (!userId || !familyId) return "Information missing";
 
     const invite = await FamilyInvites.findOne({
       where: {
@@ -312,7 +264,7 @@ class FamilyServices {
       },
     });
 
-    if (!invite) return "Invite doesnt exist";
+    if (!invite) throw new Error("Invite doesnt exist");
 
     const now = new Date();
     const future = new Date(invite.expiresAt);

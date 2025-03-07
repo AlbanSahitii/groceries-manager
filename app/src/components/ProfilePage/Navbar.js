@@ -13,10 +13,12 @@ const Navbar = () => {
   return (
     <>
       <nav className="auth-navbar">
-        <img src={CarrotLogo}></img>
+        <a href="/mainpage">
+          <img src={CarrotLogo}></img>
+        </a>
         <ul>
-          <a href="/profile">
-            <li>Profile</li>
+          <a href="/mainpage">
+            <li>Main Page</li>
           </a>
           <a href="/settings">
             <li>Settings</li>

@@ -2,101 +2,80 @@ const {User, FamilyUser, Family, sequelize} = require("../models");
 
 const bcrypt = require("bcrypt");
 const jwt = require("../utils/auth/JwtService");
+const {userSchema} = require("../validation");
 
 class UserService {
-  static registerUser = async (req, res) => {
+  static registerUser = async (req, res, next) => {
     const {username, password, confirmPassword, email, fullName} = req.body;
     const passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*d)[A-Za-zd]{8,}$";
-    // empty body to do
+    // proper error check for empty body
 
     if (password !== confirmPassword) {
-      return "Password dont match";
+      throw new Error("Password dont match");
     }
 
     // for testing purpose its removed
     // if (!passwordRegex.match(password)) {
-    //     return 'Password does not meet the criteria.'
+    //     throw new Error('Password does not meet the criteria.')
     // }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    try {
-      const user = await User.create({
-        username: username,
-        password: hashedPassword,
-        email: email,
-        full_name: fullName,
-      });
+    await User.create({
+      username: username,
+      password: hashedPassword,
+      email: email,
+      full_name: fullName,
+    });
 
-      return "User registered";
-    } catch (error) {
-      throw new Error(error);
-    }
+    return "User registered";
   };
 
-  static loginUser = async (req, res) => {
+  static loginUser = async (req, res, next) => {
     const {username, password} = req.body;
-    if (!username || !password) return "information missing";
 
     const user = await User.findOne({where: {username: username}});
-
-    if (!user) {
-      res.status(401).json({message: "User doesnt exist"});
-      return;
-    }
+    if (!user) throw new Error("User doesnt exist");
 
     const passwordCheck = await bcrypt.compare(password, user.password);
-
-    if (!passwordCheck) {
-      res.status(401).json({message: "Invalid credentials"});
-      return;
-    }
+    if (!passwordCheck) throw new Error("Invalid credentials");
 
     const userType = await this.getUserType(user.id);
 
-    try {
-      const payload = {user};
+    const payload = {user};
 
-      const jwtToken = jwt.generateJwt(payload);
-      res
-        .status(200)
-        .json({userId: user.id, jwt: jwtToken, userType: userType});
-      return;
-    } catch (error) {
-      return error;
-    }
+    const jwtToken = jwt.generateJwt(payload);
+
+    return {userId: user.id, jwt: jwtToken, userType: userType};
   };
 
-  static deleteUser = async (req, res) => {
+  static deleteUser = async (req, res, next) => {
     const {email} = req.body;
 
     const user = await User.destroy({where: {email: email}});
-    if (!user) {
-      return "user not found";
-    }
+    if (!user) throw new Error("user not found");
 
     return `user - ${email} deleted succesfully`;
   };
 
-  static getUser = async (req, res) => {
+  static getUser = async (req, res, next) => {
     const {id} = req.query;
-    if (!id) return "information missing";
-    try {
-      const user = await User.findOne({where: {id: id}});
-      if (user)
-        return {
-          user_id: user.id,
-          username: user.username,
-          email: user.email,
-          isVerified: user.isVerified,
-          fullName: user.full_name,
-        };
-    } catch (error) {
-      return error.message;
+
+    const user = await User.findOne({where: {id: id}});
+
+    if (!user) throw new Error("User doesnt exist");
+    if (user) {
+      return {
+        user_id: user.id,
+        username: user.username,
+        email: user.email,
+        isVerified: user.isVerified,
+        fullName: user.full_name,
+      };
     }
   };
 
-  static updateUser = async (req, res) => {
+  static updateUser = async (req, res, next) => {
     const {user_id, fullName, email, username, password, confirmPassword} =
       req.body;
 
@@ -108,43 +87,35 @@ class UserService {
       !password ||
       !confirmPassword
     ) {
-      return "Information missing";
+      throw new Error("Information missing");
     }
     // const passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$"
     // for testing purpose its removed
     // if (!passwordRegex.match(password)) {
-    //     return 'Password does not meet the criteria.'
+    //     throw new Error('Password does not meet the criteria.')
     // }
 
-    try {
-      const findUser = User.findOne({where: {id: user_id}});
-      if (!findUser) "User doesnt exist";
-    } catch (error) {
-      return error;
-    }
+    const findUser = User.findOne({where: {id: user_id}});
+    if (!findUser) throw new Error("User doesnt exist");
 
-    if (password !== confirmPassword) return "Passwords dont match";
+    if (password !== confirmPassword) throw new Error("Passwords dont match");
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    try {
-      const updateUser = await User.update(
-        {
-          full_name: fullName,
-          email: email,
-          password: hashedPassword,
-          username: username,
-        },
-        {where: {id: user_id}}
-      );
-      return "Updated succesfully";
-    } catch (error) {
-      return error;
-    }
+    const updateUser = await User.update(
+      {
+        full_name: fullName,
+        email: email,
+        password: hashedPassword,
+        username: username,
+      },
+      {where: {id: user_id}}
+    );
+    return "Updated succesfully";
   };
 
   static getUserType = async userId => {
     const getUser = await User.findOne({where: {id: userId}});
-    if (!getUser) return "User doesnt exist";
+    if (!getUser) throw new Error("User doesnt exist");
 
     const owner = await sequelize.query(
       "SELECT * FROM users JOIN families ON users.id = families.owner_id where users.id = ?",
@@ -161,16 +132,17 @@ class UserService {
     }
   };
 
-  static validateUser = async (req, res) => {
+  static validateUser = async (req, res, next) => {
     const {username, jwtToken} = req.body;
-    if (!username || !jwtToken) return "Information missing";
+    if (!username || !jwtToken) throw new Error("Information missing");
 
     const user = await User.findOne({where: {username: username}});
-    if (!user) return "User doesnt exist";
+    if (!user) throw new Error("User doesnt exist");
 
     const validateJWT = await jwt.verifyJwt(jwtToken);
-    if (!validateJWT) return "Invalid JWT token";
-    if (username !== validateJWT.user.username) return "Information is invalid";
+    if (!validateJWT) throw new Error("Invalid JWT token");
+    if (username !== validateJWT.user.username)
+      throw new Error("Information is invalid");
 
     return jwtToken;
   };

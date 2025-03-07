@@ -3,7 +3,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import CreateFamily from "./CreateFamily";
-import ProfilePage from "./ProfilePage";
+import MainPage from "./MainPage";
 import AcceptFamily from "./AcceptFamily";
 import Navbar from "./Navbar";
 import "./src/styles/profile.css";
@@ -53,7 +53,7 @@ const Profile = () => {
     <>
       <Navbar />
       {userFam === true ? (
-        <ProfilePage />
+        <MainPage />
       ) : (
         <div className="profile-family-container">
           <CreateFamily />

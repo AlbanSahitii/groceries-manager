@@ -25,12 +25,11 @@
 }
 .settings-header {
   margin-bottom: 5%;
+  width: 99.9%;
 }
 
 .settings-header-images {
   position: relative;
-  width: 99.99%;
-  height: auto;
 }
 
 .settings-header-images > img:first-child {

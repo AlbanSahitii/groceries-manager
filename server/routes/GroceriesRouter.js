@@ -1,16 +1,58 @@
-const express = require('express')
-const GroceriesRoutes = express.Router()
-const Middleware = require('../middleware/Middleware')
+const express = require("express");
+const GroceriesRoutes = express.Router();
+const Middleware = require("../middleware/Middleware");
+const tryCatch = require("../utils/tryCatch");
+const GroceriesController = require("../controllers/Groceries/GroceriesController");
+const {groceriesSchema} = require("../validation");
 
-const GroceriesController = require('../controllers/Groceries/GroceriesController')
+GroceriesRoutes.post(
+  "/create",
+  Middleware.jwtAuth,
+  Middleware.validateRequest(groceriesSchema.create),
+  tryCatch(GroceriesController.create)
+);
+GroceriesRoutes.get(
+  "/get",
+  Middleware.jwtAuth,
+  Middleware.validateQuery(groceriesSchema.get),
+  tryCatch(GroceriesController.get)
+);
+GroceriesRoutes.put(
+  "/update",
+  Middleware.jwtAuth,
+  Middleware.validateRequest(groceriesSchema.update),
+  tryCatch(GroceriesController.update)
+);
+GroceriesRoutes.delete(
+  "/delete",
+  Middleware.jwtAuth,
+  Middleware.validateRequest(groceriesSchema.delete),
+  tryCatch(GroceriesController.delete)
+);
+GroceriesRoutes.post(
+  "/add_grocerie_in_list",
+  Middleware.jwtAuth,
+  Middleware.validateRequest(groceriesSchema.addGrocerieInList),
+  tryCatch(GroceriesController.addGrocerieInList)
+);
+GroceriesRoutes.get(
+  "/get_family_grocery_list",
+  Middleware.jwtAuth,
+  Middleware.validateQuery(groceriesSchema.getFamilyGroceryList),
+  tryCatch(GroceriesController.getFamilyGroceryList)
+);
+GroceriesRoutes.post(
+  "/purchase_grocery",
+  Middleware.jwtAuth,
+  Middleware.validateRequest(groceriesSchema.purchaseGrocery),
+  tryCatch(GroceriesController.purchaseGrocery)
+);
+GroceriesRoutes.post(
+  "/get_last_ten_groceries",
+  Middleware.jwtAuth,
+  Middleware.validateRequest(groceriesSchema.getLastTenGroceries),
+  tryCatch(GroceriesController.getLastTenGroceries)
+);
+GroceriesRoutes.use(Middleware.errorHandler);
 
-GroceriesRoutes.post('/create', GroceriesController.create)
-GroceriesRoutes.get('/get', GroceriesController.get)
-GroceriesRoutes.put('/update', GroceriesController.update)
-GroceriesRoutes.delete('/delete', GroceriesController.delete)
-GroceriesRoutes.post('/add_grocerie_in_list', GroceriesController.addGrocerieInList)
-GroceriesRoutes.get('/get_family_grocery_list', GroceriesController.getFamilyGroceryList)
-GroceriesRoutes.post('/purchase_grocery', GroceriesController.purchaseGrocery)
-GroceriesRoutes.post('/get_last_ten_groceries', GroceriesController.getLastTenGroceries)
-
-module.exports = GroceriesRoutes
+module.exports = GroceriesRoutes;

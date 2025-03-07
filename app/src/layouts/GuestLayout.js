@@ -10,7 +10,7 @@ const GuestLayout = () => {
     return <Spinner />;
   }
 
-  return !user ? <Outlet /> : <Navigate to="/profile" />;
+  return !user ? <Outlet /> : <Navigate to="/mainpage" />;
 };
 
 export default GuestLayout;

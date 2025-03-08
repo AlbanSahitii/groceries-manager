@@ -17,11 +17,6 @@ export const AuthProvider = ({children}) => {
     const userType = localStorage.getItem("userType");
 
     if (jwt && username && userId) {
-      const fetchData = async () => {
-        await checkUser({username: username, jwtToken: jwt});
-      };
-
-      fetchData();
       setUser({jwt, username, userId, familyId, userType});
     }
     setLoading(false);
@@ -66,26 +61,6 @@ export const AuthProvider = ({children}) => {
     }
   };
 
-  const checkUser = async data => {
-    setLoading(true);
-    try {
-      await axios
-        .post("http://localhost:3080/api/user/validateUser", data)
-        .then(response => {
-          if (
-            response.data === "User doesnt exist" ||
-            response.data === "Information missing" ||
-            response.data === "Invalid JWT token"
-          ) {
-            logout();
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
-  };
-
   const updateContext = (field, value) => {
     setUser(prevState => ({
       ...prevState,
@@ -103,7 +78,6 @@ export const AuthProvider = ({children}) => {
         login,
         register,
         updateContext,
-        checkUser,
       }}
     >
       {children}

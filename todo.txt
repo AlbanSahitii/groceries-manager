@@ -1,3 +1,7 @@
+put groceries apis to api/groceries.js
+update the logic for knowing that user is authed
+every request made it will check the jwt and if not valid it will logout
+
 groceries useQuery
 finish the form design for settings
 start doing proper error checking and alerts when doing actions

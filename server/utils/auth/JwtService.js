@@ -10,7 +10,7 @@ class JwtService {
         */
     try {
       const token = jwt.sign(payload, secretKey, {
-        expiresIn: "1m",
+        expiresIn: "1d",
       });
       return token;
     } catch (error) {
@@ -18,14 +18,10 @@ class JwtService {
     }
   };
 
-  static verifyJwt = token => {
-    try {
-      const decoded = jwt.verify(token, secretKey);
+  static verifyJwt = async token => {
+    const decoded = await jwt.verify(token, secretKey);
 
-      return decoded;
-    } catch (err) {
-      throw new Error(err.message);
-    }
+    return decoded;
   };
 }
 

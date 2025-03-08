@@ -1,5 +1,4 @@
 import {React, useContext, useEffect, useState} from "react";
-import axios from "axios";
 import {useQuery, useMutation, useQueryClient} from "react-query";
 import {AuthContext} from "../../context/AuthContext";
 import {createFamily, familyInviteAccept} from "../../api/family";

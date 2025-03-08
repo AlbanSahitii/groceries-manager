@@ -4,7 +4,6 @@ import {useQuery, useMutation, useQueryClient} from "react-query";
 import {AuthContext} from "../../context/AuthContext";
 import {useNavigate} from "react-router-dom";
 import Navbar from "./Navbar";
-import axios from "axios";
 
 import {
   addFamilyMember,

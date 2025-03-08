@@ -114,6 +114,7 @@ class FamilyServices {
 
   static isUserInFamily = async (req, res) => {
     const {user_id} = req.query;
+    console.log(req);
 
     const userFamily = await FamilyUser.findOne({where: {user_id: user_id}});
     const inviteInFamily = await FamilyInvites.findOne({

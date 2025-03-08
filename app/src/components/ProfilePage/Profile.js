@@ -1,7 +1,6 @@
 import {React, useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context/AuthContext";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
 import CreateFamily from "./CreateFamily";
 import MainPage from "./MainPage";
 import AcceptFamily from "./AcceptFamily";
@@ -17,7 +16,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const {data: userInformation, isLoading} = useQuery("userInformation", () =>
-    checkUser(user.userId)
+    checkUser(user.userId, user.jwt)
   );
 
   useEffect(() => {

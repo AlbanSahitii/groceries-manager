@@ -10,7 +10,7 @@ class JwtService {
         */
     try {
       const token = jwt.sign(payload, secretKey, {
-        expiresIn: "1d",
+        expiresIn: "1m",
       });
       return token;
     } catch (error) {

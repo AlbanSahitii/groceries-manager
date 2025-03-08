@@ -12,14 +12,25 @@ import {
 import {useQuery, useMutation, useQueryClient} from "react-query";
 
 const AcceptFamily = () => {
-  const {user, setUser} = useContext(AuthContext);
+  const {user, setUser, sessionExpireError} = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const {data: familyMembers} = useQuery("familyMembers", () =>
-    getFamilyMembers(user.familyId)
+  const {data: familyMembers} = useQuery(
+    "familyMembers",
+    () => getFamilyMembers(user.familyId, user.jwt),
+    {onError: err => sessionExpireError(err)}
   );
-  const {data: familyInformation} = useQuery("familyInformation", () =>
-    getFamilyInviteInformation({familyId: user.familyId, userId: user.userId})
+  const {data: familyInformation} = useQuery(
+    "familyInformation",
+    () =>
+      getFamilyInviteInformation({
+        familyId: user.familyId,
+        userId: user.userId,
+        jwt: user.jwt,
+      }),
+    {
+      onError: err => sessionExpireError(err),
+    }
   );
 
   const acceptFamilyInviteSubmit = e => {
@@ -28,6 +39,7 @@ const AcceptFamily = () => {
     acceptFamilyWithInviteMutaiton.mutate({
       family_id: user.familyId,
       user_id: user.userId,
+      jwt: user.jwt,
     });
 
     window.location.reload();
@@ -38,6 +50,7 @@ const AcceptFamily = () => {
     const response = declineFamilyInviteMutation.mutate({
       family_id: user.familyId,
       user_id: user.userId,
+      jwt: user.jwt,
     });
 
     alert("You declined family invite");
@@ -48,12 +61,12 @@ const AcceptFamily = () => {
   const acceptFamilyWithInviteMutaiton = useMutation({
     mutationFn: acceptFamilyWithInvite,
     onSuccess: e => console.log(e),
-    onError: e => console.log(e),
+    onError: err => sessionExpireError(err),
   });
   const declineFamilyInviteMutation = useMutation({
     mutationFn: declineFamilyInvite,
     onSuccess: e => console.log(e),
-    onError: e => console.log(e),
+    onError: err => sessionExpireError(err),
   });
 
   return (

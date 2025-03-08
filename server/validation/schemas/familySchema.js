@@ -50,8 +50,8 @@ const familySchema = {
     newOwnerUsername: Joi.string().required(),
   }),
   getInviteInformaiton: Joi.object({
-    user_id: Joi.number().required(),
-    family_id: Joi.number().required(),
+    userId: Joi.number().required(),
+    familyId: Joi.number().required(),
   }),
 };
 module.exports = familySchema;

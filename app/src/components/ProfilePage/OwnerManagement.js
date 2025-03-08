@@ -17,11 +17,16 @@ import profileIcon from "./src/img/profile-icon.png";
 const OwnerManagement = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const {user, setUser, updateContext} = useContext(AuthContext);
+  const {user, setUser, updateContext, sessionExpireError} =
+    useContext(AuthContext);
   const [inviteEmail, setInviteEmail] = useState(null);
 
-  const {data: familyMembers} = useQuery("familyMembers", () =>
-    fetchFamilies(user.familyId)
+  const {data: familyMembers} = useQuery(
+    "familyMembers",
+    () => fetchFamilies(user.familyId, user.jwt),
+    {
+      onError: err => sessionExpireError(err),
+    }
   );
 
   const handleChange = e => {
@@ -32,7 +37,11 @@ const OwnerManagement = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    addMemberMutation.mutate({family_id: user.familyId, email: inviteEmail});
+    addMemberMutation.mutate({
+      family_id: user.familyId,
+      email: inviteEmail,
+      jwt: user.jwt,
+    });
   };
 
   const addMemberMutation = useMutation({
@@ -40,7 +49,7 @@ const OwnerManagement = () => {
     onSuccess: () => {
       setInviteEmail("");
     },
-    onError: e => console.log(e),
+    onError: err => sessionExpireError(err),
   });
 
   const deleteMemberMutation = useMutation({
@@ -49,9 +58,7 @@ const OwnerManagement = () => {
       alert("deleted succesfully");
       queryClient.invalidateQueries(["familyMembers"]);
     },
-    onError: error => {
-      alert(error);
-    },
+    onError: err => sessionExpireError(err),
   });
 
   const transferOwnerMutaiton = useMutation({
@@ -61,7 +68,7 @@ const OwnerManagement = () => {
       localStorage.setItem("userType", "Member");
       window.location.reload();
     },
-    onError: e => console.log(e),
+    onError: err => sessionExpireError(err),
   });
 
   return (
@@ -102,7 +109,12 @@ const OwnerManagement = () => {
                 <div className="card-right-button-container">
                   {item.username !== user.username && (
                     <button
-                      onClick={() => deleteMemberMutation.mutate(item.username)}
+                      onClick={() =>
+                        deleteMemberMutation.mutate({
+                          username: item.username,
+                          jwt: user.jwt,
+                        })
+                      }
                     >
                       Remove
                     </button>
@@ -113,6 +125,7 @@ const OwnerManagement = () => {
                         transferOwnerMutaiton.mutate({
                           ownerUsername: user.username,
                           newOwnerUsername: item.username,
+                          jwt: user.jwt,
                         })
                       }
                     >

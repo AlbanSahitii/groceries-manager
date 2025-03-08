@@ -1,19 +1,20 @@
 import axios from "axios";
-const jwtToken = localStorage.getItem("jwt");
-const headers = {
-  authorization: `Bearer ${jwtToken}`,
-};
 
-export const checkUser = async user_id => {
+export const checkUser = async (user_id, jwt) => {
   const response = await axios.get(
     `http://localhost:3080/api/family/check_user?user_id=${user_id}`,
-    {headers}
+    {
+      headers: {
+        authorization: `Bearer ${jwt}`,
+      },
+    }
   );
   return response.data;
 };
 
 export const updateUser = async data => {
-  const {fullName, username, email, password, confirmPassword, user_id} = data;
+  const {fullName, username, email, password, confirmPassword, user_id, jwt} =
+    data;
   console.log(fullName);
   console.log(user_id);
   console.log(email);
@@ -30,17 +31,25 @@ export const updateUser = async data => {
       confirmPassword,
       user_id,
     },
-    {headers}
+    {
+      headers: {
+        authorization: `Bearer ${jwt}`,
+      },
+    }
   );
 
   console.log(response.data);
   return response;
 };
 
-export const getUser = async user_id => {
+export const getUser = async (user_id, jwt) => {
   const response = await axios.get(
     `http://localhost:3080/api/user/getUser?id=${user_id}`,
-    {headers}
+    {
+      headers: {
+        authorization: `Bearer ${jwt}`,
+      },
+    }
   );
   return response.data;
 };

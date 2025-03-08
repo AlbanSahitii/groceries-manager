@@ -68,10 +68,18 @@ export const AuthProvider = ({children}) => {
     }));
   };
 
+  const sessionExpireError = error => {
+    if (error.status === 401) {
+      alert("Your session has expired");
+      logout();
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
         loading,
+        sessionExpireError,
         logout,
         user,
         setUser,

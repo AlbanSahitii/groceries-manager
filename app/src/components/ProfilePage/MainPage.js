@@ -9,7 +9,7 @@ const MainPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const {data: familyMembers} = useQuery("familyMembers", () =>
-    fetchFamilies(user.familyId)
+    fetchFamilies(user.familyId, user.jwt)
   );
 
   return (

@@ -11,13 +11,18 @@ import {useQuery} from "react-query";
 import {checkUser} from "../../api/user.js";
 
 const Profile = () => {
-  const {logout, user, setUser} = useContext(AuthContext);
+  const {logout, user, setUser, sessionExpireError} = useContext(AuthContext);
   const [userFam, setUserFam] = useState(null);
   const navigate = useNavigate();
 
-  const {data: userInformation, isLoading} = useQuery("userInformation", () =>
-    checkUser(user.userId, user.jwt)
-  );
+  const {
+    data: userInformation,
+    error,
+    isLoading,
+  } = useQuery("userInformation", () => checkUser(user.userId, user.jwt), {
+    retry: 1,
+    onError: err => sessionExpireError(err),
+  });
 
   useEffect(() => {
     if (

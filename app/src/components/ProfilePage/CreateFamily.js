@@ -6,7 +6,7 @@ import {createFamily, familyInviteAccept} from "../../api/family";
 import carrotLogo from "./src/img/carrot-icon.png";
 const CreateFamily = () => {
   const [inputs, setInputs] = useState({});
-  const {user, setUser} = useContext(AuthContext);
+  const {user, setUser, sessionExpireError} = useContext(AuthContext);
 
   const handleSubmitWithInvite = async e => {
     e.preventDefault();
@@ -15,13 +15,14 @@ const CreateFamily = () => {
       family_name: inputs.familyName,
       family_id: user.familyId,
       user_id: user.userId,
+      jwt: user.jwt,
     });
     window.location.reload();
   };
 
   const familyInviteAccewptMutaiton = useMutation({
     mutationFn: familyInviteAccept,
-    onError: e => console.log(e),
+    onError: err => sessionExpireError(err),
     onSuccess: e => console.log(e),
   });
 
@@ -31,6 +32,7 @@ const CreateFamily = () => {
     const response = createFamilyMutation.mutate({
       family_name: inputs.familyName,
       user_id: user.userId,
+      jwt: user.jwt,
     });
 
     localStorage.setItem("userType", "Owner");
@@ -42,7 +44,7 @@ const CreateFamily = () => {
   const createFamilyMutation = useMutation({
     mutationFn: createFamily,
     onSuccess: e => console.log(e),
-    onError: e => console.log(e),
+    onError: err => sessionExpireError(err),
   });
 
   const handleChange = e => {

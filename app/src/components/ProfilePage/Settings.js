@@ -15,19 +15,19 @@ import "./src/styles/settings-style.css";
 import ProfileLogo from "./src/img/profile-icon.png";
 import ProfileWallpaper from "./src/img/profile-background.png";
 const Settings = () => {
-  const {user} = useContext(AuthContext);
+  const {user, logout} = useContext(AuthContext);
   const [inputs, setInputs] = useState({});
   const [seePassword, setSeePassword] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const queryClient = useQueryClient();
   const {data: userData, isLoading: loadingUser} = useQuery(
     ["userData", user.userId],
-    () => getUser(user.userId)
+    () => getUser(user.userId, user.jwt)
   );
 
   const {data: familyData, isLoading: loadingFamily} = useQuery(
     "familyData",
-    () => fetchFamilyInformation(user.familyId)
+    () => fetchFamilyInformation(user.familyId, user.jwt)
   );
 
   const updateMutation = useMutation({
@@ -35,10 +35,10 @@ const Settings = () => {
     onError: e => console.log(e),
   });
   const handleSubmit = async e => {
-    updateMutation.mutate({...inputs, user_id: user.userId});
+    updateMutation.mutate({...inputs, user_id: user.userId, jwt: user.jwt});
     queryClient.invalidateQueries(["userData"]);
     alert("please login again");
-    setIsEditing(!isEditing);
+    logout();
   };
 
   const handleChange = e => {
@@ -142,11 +142,17 @@ const Settings = () => {
               </label>
               {isEditing && (
                 <>
-                  <button onClick={() => setIsEditing(!isEditing)}>
-                    Go Back
-                  </button>
-                  <button onClick={() => setSeePassword(!seePassword)}>
+                  <button
+                    type="button"
+                    onClick={() => setSeePassword(!seePassword)}
+                  >
                     Show password
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsEditing(!isEditing)}
+                  >
+                    Go Back
                   </button>
                 </>
               )}
@@ -154,6 +160,7 @@ const Settings = () => {
                 <input type="submit" value="Save Changes" />
               ) : (
                 <button
+                  type="button"
                   className="butoni"
                   onClick={() => setIsEditing(!isEditing)}
                 >

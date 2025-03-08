@@ -4,20 +4,28 @@ const secretKey = process.env.JWT_KEY;
 class Middleware {
   static jwtAuth = (req, res, next) => {
     const authHeader = req.headers["authorization"];
-    
+
     if (authHeader && authHeader.startsWith("Bearer ")) {
       const token = authHeader.split(" ")[1];
 
       jwt.verify(token, secretKey, (err, decoded) => {
-        console.log(err)
+        console.log(err);
         if (err) {
-          throw new Error("Forbidden: Invalid or expired token");
+          throw {
+            name: "TokenExpiredError",
+            message: "Forbidden: Invalid or expired token",
+            statusCode: 401,
+          };
         }
         req.user = decoded;
         next();
       });
     } else {
-      return res.status(401).json({message: "Unauthorized: No token provided"});
+      throw {
+        name: "TokenExpiredError",
+        message: "Unauthorized: No token provided",
+        statusCode: 401,
+      };
     }
   };
 
@@ -28,7 +36,10 @@ class Middleware {
         details: error.details,
       });
     }
-
+    if (error.name === "TokenExpiredError") {
+      console.log(`here`);
+      return res.status(401).send(error.message);
+    }
     return res.status(400).send(error.message);
   };
 

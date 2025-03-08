@@ -15,12 +15,6 @@ export const checkUser = async (user_id, jwt) => {
 export const updateUser = async data => {
   const {fullName, username, email, password, confirmPassword, user_id, jwt} =
     data;
-  console.log(fullName);
-  console.log(user_id);
-  console.log(email);
-  console.log(password);
-  console.log(confirmPassword);
-  console.log(username);
   const response = await axios.put(
     "http://localhost:3080/api/user/update",
     {
@@ -38,7 +32,6 @@ export const updateUser = async data => {
     }
   );
 
-  console.log(response.data);
   return response;
 };
 

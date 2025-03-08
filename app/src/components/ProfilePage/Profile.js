@@ -52,7 +52,6 @@ const Profile = () => {
   if (isLoading) {
     return <Spinner />;
   }
-  console.log(user);
   return (
     <>
       <Navbar />

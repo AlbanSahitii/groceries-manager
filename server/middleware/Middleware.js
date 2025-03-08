@@ -9,7 +9,6 @@ class Middleware {
       const token = authHeader.split(" ")[1];
 
       jwt.verify(token, secretKey, (err, decoded) => {
-        console.log(err);
         if (err) {
           throw {
             name: "TokenExpiredError",
@@ -37,7 +36,6 @@ class Middleware {
       });
     }
     if (error.name === "TokenExpiredError") {
-      console.log(`here`);
       return res.status(401).send(error.message);
     }
     return res.status(400).send(error.message);

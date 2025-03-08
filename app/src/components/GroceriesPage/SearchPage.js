@@ -7,8 +7,6 @@ const SearchPage = () => {
   const [groceries, setGroceries] = useState([]);
   const {user, setUser} = useContext(AuthContext);
 
-  console.log(`search`);
-
   const handleChange = e => {
     e.preventDefault();
     const value = e.target.value;
@@ -42,8 +40,6 @@ const SearchPage = () => {
       })
       .catch(error => console.log(error));
   };
-
-  console.log(groceries);
 
   return (
     <>

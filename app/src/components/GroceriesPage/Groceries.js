@@ -22,13 +22,11 @@ const Groceries = () => {
         family_groceries_id: id,
       })
       .then(response => {
-        console.log(response);
         setGroceries(groceries.filter(grocerie => grocerie.id !== id));
       })
       .catch(error => console.log(error));
   };
 
-  console.log(groceries);
   return (
     <>
       <Navbar />

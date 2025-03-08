@@ -135,7 +135,6 @@ export const getFamilyInviteInformation = async data => {
 
 export const acceptFamilyWithInvite = async data => {
   const {family_id, user_id, jwt} = data;
-  console.log(data);
   const response = await axios.post(
     `http://localhost:3080/api/family/accept_invite`,
     {family_id, user_id},

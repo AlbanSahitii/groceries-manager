@@ -30,6 +30,10 @@ class UserController {
     const result = await UserServices.getUser(req, res, next);
     res.json(result);
   };
+  static refreshToken = async (req, res, next) => {
+    const result = await UserServices.refreshToken(req, res, next);
+    res.json(result);
+  };
 }
 
 module.exports = UserController;

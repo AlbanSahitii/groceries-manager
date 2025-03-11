@@ -1,11 +1,10 @@
-const express = require("express");
 const cors = require("cors");
+const express = require("express");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
-const app = express();
-app.use(express.json());
-app.use(cors());
 const PORT = process.env.PORT;
 const HOST = process.env.HOST;
+const app = express();
 
 // router imports
 const userRouter = require("./routes/UserRouter.js");
@@ -18,6 +17,14 @@ const purchasedGroceries = require("./routes/PurchasedGroceriesRouter.js");
 const testRouter = require("./routes/TestRouter.js");
 const Middleware = require("./middleware/Middleware.js");
 
+app.use(cookieParser());
+app.use(express.json());
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use("/api/user", userRouter);
 app.use("/api/family", familyRouter);
 app.use("/api/groceries", groceriesRouter);

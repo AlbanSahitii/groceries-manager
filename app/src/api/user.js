@@ -1,22 +1,18 @@
-import axios from "axios";
-
+import api from "./axiosInstance";
 export const checkUser = async (user_id, jwt) => {
-  const response = await axios.get(
-    `http://localhost:3080/api/family/check_user?user_id=${user_id}`,
-    {
-      headers: {
-        authorization: `Bearer ${jwt}`,
-      },
-    }
-  );
+  const response = await api.get(`/family/check_user?user_id=${user_id}`, {
+    headers: {
+      authorization: `Bearer ${jwt}`,
+    },
+  });
   return response.data;
 };
 
 export const updateUser = async data => {
   const {fullName, username, email, password, confirmPassword, user_id, jwt} =
     data;
-  const response = await axios.put(
-    "http://localhost:3080/api/user/update",
+  const response = await api.put(
+    "/user/update",
     {
       fullName,
       username,
@@ -36,13 +32,10 @@ export const updateUser = async data => {
 };
 
 export const getUser = async (user_id, jwt) => {
-  const response = await axios.get(
-    `http://localhost:3080/api/user/getUser?id=${user_id}`,
-    {
-      headers: {
-        authorization: `Bearer ${jwt}`,
-      },
-    }
-  );
+  const response = await api.get(`/user/getUser?id=${user_id}`, {
+    headers: {
+      authorization: `Bearer ${jwt}`,
+    },
+  });
   return response.data;
 };

@@ -39,6 +39,7 @@ UserRouter.get(
   Middleware.validateQuery(userSchema.getUser),
   tryCatch(UserController.getUser)
 );
+UserRouter.post("/refresh_token", tryCatch(UserController.refreshToken));
 
 UserRouter.use(Middleware.errorHandler);
 

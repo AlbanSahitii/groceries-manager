@@ -42,9 +42,17 @@ class UserService {
 
     const userType = await this.getUserType(user.id);
 
-    const payload = {user};
+    const payload = {user_id: user.id};
 
-    const jwtToken = jwt.generateJwt(payload);
+    const jwtToken = jwt.generateJwt(payload, true);
+    const refreshToken = jwt.generateJwt(payload, false);
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
 
     return {userId: user.id, jwt: jwtToken, userType: userType};
   };
@@ -145,6 +153,17 @@ class UserService {
       throw new Error("Information is invalid");
 
     return jwtToken;
+  };
+  static refreshToken = async (req, res, next) => {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken)
+      return res.status(403).json({message: "No refresh token"});
+
+    const response = await jwt.verifyJwt(refreshToken);
+    const newAccessToken = jwt.generateJwt({user_id: response.user_id}, true);
+
+    return newAccessToken;
   };
 }
 

@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken");
 const secretKey = process.env.JWT_KEY;
+const refreshKey = process.env.REFRESH_KEY;
 
 class JwtService {
-  static generateJwt = payload => {
+  static generateJwt = (payload, accessToken) => {
     /*
         payload needs to receive 
         something other than it is, DEFINETLY NOT USERNAME PASSWORD
@@ -10,7 +11,7 @@ class JwtService {
         */
     try {
       const token = jwt.sign(payload, secretKey, {
-        expiresIn: "1m",
+        expiresIn: accessToken ? "15min" : "1d",
       });
       return token;
     } catch (error) {
@@ -19,7 +20,7 @@ class JwtService {
   };
 
   static verifyJwt = async token => {
-    const decoded = await jwt.verify(token, secretKey);
+    const decoded = jwt.verify(token, secretKey);
 
     return decoded;
   };
